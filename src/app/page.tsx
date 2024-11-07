@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-//import "./globals.css"
+import "./globals.css"
 
 export default function AnimatedIntro() {
   const downwaveRef = useRef<HTMLDivElement>(null)
@@ -38,7 +38,7 @@ export default function AnimatedIntro() {
   }, [])
 
   return (
-    <>
+    <main>
       <style jsx>{`
         @keyframes down {
           0% { transform: translateY(-10vh); }
@@ -93,11 +93,11 @@ export default function AnimatedIntro() {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center animate-[out_1.5s_3s_forwards]"
         >
           <h1>你好，我等待已久的人。</h1>
-          <p>欢迎来到我的个人网站。<br />很高兴和你分享我的故事。</p>
+          <br /><p className="small-text">欢迎来到我的个人网站。<br />很高兴和你分享我的故事。</p>
         </div>
         {/* Uncomment the following line if you want to include the P3RE logo */}
-        <Image id="p3relogo" src="/P3RE.svg" alt="P3RE Logo" width={100} height={100} className="absolute right-[12%] top-1/2 -translate-y-1/2 opacity-0 animate-[in_1.5s_5s_forwards]" />
+        {/*<Image id="p3relogo" src="/P3RE.svg" alt="P3RE Logo" width={100} height={100} className="absolute right-[12%] top-1/2 -translate-y-1/2 opacity-0 animate-[in_1.5s_5s_forwards]" />*/}
       </div>
-    </>
+    </main>
   )
 }
