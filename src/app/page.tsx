@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import "./globals.css"
 
-export default function AnimatedIntro() {
+export default function Index() {
   const downwaveRef = useRef<HTMLDivElement>(null)
   const video1Ref = useRef<HTMLVideoElement>(null)
   const video2Ref = useRef<HTMLVideoElement>(null)
