@@ -57,14 +57,25 @@ export default function AnimatedIntro() {
         style={{ display: isAnimationEnded ? 'none' : 'flex' }}
       >
         <div className="waves absolute bottom-[120vh] w-full">
-          <Image src="/img/waves/wave-1.svg" alt="Wave 1" width={1920} height={1080} />
-          <Image src="/img/waves/wave-2.svg" alt="Wave 2" width={1920} height={1080} />
-          <Image src="/img/waves/wave-3.svg" alt="Wave 3" width={1920} height={1080} />
-          <Image src="/img/waves/wave-4.svg" alt="Wave 4" width={1920} height={1080} />
-          <Image src="/img/waves/wave-5.svg" alt="Wave 5" width={1920} height={1080} id="shape" />
+          <Image src="/waves/wave-1.svg" alt="Wave 1" width={1920} height={1080} />
+          <Image src="/waves/wave-2.svg" alt="Wave 2" width={1920} height={1080} />
+          <Image src="/waves/wave-3.svg" alt="Wave 3" width={1920} height={1080} />
+          <Image src="/waves/wave-4.svg" alt="Wave 4" width={1920} height={1080} />
+          <Image src="/waves/wave-5.svg" alt="Wave 5" width={1920} height={1080} id="shape" />
         </div>
       </div>
       <div id="videobg" className="w-full h-full">
+	  <video 
+          ref={video1Ref}
+          className="videos w-full h-full object-cover absolute"
+          muted 
+		  
+          playsInline
+        >
+          <source src="/assset/fv_movie1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+		
         <video 
           ref={video2Ref}
           className="videos w-full h-full object-cover absolute"
@@ -76,16 +87,7 @@ export default function AnimatedIntro() {
           <source src="/assset/fv_movie2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <video 
-          ref={video1Ref}
-          className="videos w-full h-full object-cover absolute"
-          muted 
-		  
-          playsInline
-        >
-          <source src="/assset/fv_movie1.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+
         <div 
           id="centertext" 
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center animate-[out_1.5s_3s_forwards]"
