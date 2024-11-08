@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+
 import "./globals.css"
 
 export default function Index() {
@@ -10,6 +12,7 @@ export default function Index() {
   const video2Ref = useRef<HTMLVideoElement>(null)
   const [isAnimationEnded, setIsAnimationEnded] = useState(false)
   const [isVideo1Ended, setIsVideo1Ended] = useState(false)
+  const [showBlogContent, setShowBlogContent] = useState(false)
 
   useEffect(() => {
     const downwave = downwaveRef.current
@@ -21,6 +24,7 @@ export default function Index() {
     const handleAnimationEnd = () => {
       setIsAnimationEnded(true)
       video1.play().catch(error => console.error("Error playing video 1:", error))
+      setTimeout(() => setShowBlogContent(true), 1000) // Show blog content after a short delay
     }
 
     const handleVideo1End = () => {
@@ -36,7 +40,11 @@ export default function Index() {
       video1.removeEventListener('ended', handleVideo1End)
     }
   }, [])
-
+  const blogPosts = [
+    { id: 1, title: "我的第一篇博客", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
+    { id: 2, title: "我最喜欢的旅行目的地", excerpt: "探索我最喜欢的旅行地点，以及为什么它们如此特别。" },
+    { id: 3, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
+  ]
   return (
     <main>
       <style jsx>{`
@@ -98,6 +106,27 @@ export default function Index() {
         {/* Uncomment the following line if you want to include the P3RE logo */}
         {/*<Image id="p3relogo" src="/P3RE.svg" alt="P3RE Logo" width={100} height={100} className="absolute right-[12%] top-1/2 -translate-y-1/2 opacity-0 animate-[in_1.5s_5s_forwards]" />*/}
       </div>
+      {showBlogContent && (
+        <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
+          <header className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka's Blog</h1>
+            <p className="text-xl text-gray-600">一个北漂的故事和经历</p>
+          </header>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogPosts.map(post => (
+              <div key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-2">{post.title}</h2>
+                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                  <Link href={`/blog/${post.id}`} className="text-blue-500 hover:text-blue-600 font-medium">
+                    阅读更多
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </main>
   )
 }
