@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { motion } from 'framer-motion'
 import "./globals.css"
 
 export default function Index() {
@@ -44,11 +44,23 @@ export default function Index() {
     { id: 1, title: "我的第一篇博客", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
     { id: 2, title: "我最喜欢的旅行目的地", excerpt: "探索我最喜欢的旅行地点，以及为什么它们如此特别。" },
     { id: 3, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
-    { id: 4, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
-    { id: 5, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
-    { id: 6, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
-
+    { id: 4, title: "我的摄影之旅", excerpt: "记录我在摄影领域的探索和成长。" },
+    { id: 5, title: "美食探险记", excerpt: "品尝各地美食，分享独特的味蕾体验。" },
+    { id: 6, title: "工作与生活的平衡", excerpt: "探讨如何在繁忙的生活中找到平衡点。" },
   ]
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  }
   return (
     <main>
       <style jsx>{`
@@ -114,11 +126,23 @@ export default function Index() {
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
           <header className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka's Blog</h1>
-            {/*<p className="text-xl text-gray-600">一个北漂的故事和经历</p>*/}
           </header>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {blogPosts.map(post => (
-              <div key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <motion.div 
+                key={post.id} 
+                className="bg-white rounded-lg shadow-md overflow-hidden"
+                variants={cardVariants}
+                whileHover={{ 
+                  scale: 1.05, 
+                  transition: { duration: 0.2 } 
+                }}
+              >
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold text-gray-800 mb-2">{post.title}</h2>
                   <p className="text-gray-600 mb-4">{post.excerpt}</p>
@@ -126,9 +150,9 @@ export default function Index() {
                     阅读更多
                   </Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       )}
     </main>
