@@ -44,6 +44,10 @@ export default function Index() {
     { id: 1, title: "我的第一篇博客", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
     { id: 2, title: "我最喜欢的旅行目的地", excerpt: "探索我最喜欢的旅行地点，以及为什么它们如此特别。" },
     { id: 3, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
+    { id: 4, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
+    { id: 5, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
+    { id: 6, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
+
   ]
   return (
     <main>
@@ -110,7 +114,7 @@ export default function Index() {
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
           <header className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka's Blog</h1>
-            <p className="text-xl text-gray-600">一个北漂的故事和经历</p>
+            {/*<p className="text-xl text-gray-600">一个北漂的故事和经历</p>*/}
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map(post => (
