@@ -24,7 +24,7 @@ export default function Index() {
     const handleAnimationEnd = () => {
       setIsAnimationEnded(true)
       video1.play().catch(error => console.error("Error playing video 1:", error))
-      setTimeout(() => setShowBlogContent(true), 1000) // Show blog content after a short delay
+      setTimeout(() => setShowBlogContent(true), 2000) // Show blog content after a short delay
     }
 
     const handleVideo1End = () => {
@@ -125,7 +125,7 @@ export default function Index() {
       {showBlogContent && (
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
           <header className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka's Blog</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka&apos;s Blog</h1>
           </header>
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
