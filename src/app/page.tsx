@@ -64,8 +64,8 @@ export default function Index() {
           <Image src="/waves/wave-5.svg" alt="Wave 5" width={1920} height={1080} id="shape" />
         </div>
       </div>
-      <div id="videobg" className="w-full h-full">
-	  <video 
+    <div id="videobg" className="w-full h-full">
+	    <video 
           ref={video1Ref}
           className="videos w-full h-full object-cover absolute"
           muted 
