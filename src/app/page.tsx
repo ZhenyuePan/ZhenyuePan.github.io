@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import "./globals.css"
+import Navbar from '@/components/navbar'
 
 export default function Index() {
   const downwaveRef = useRef<HTMLDivElement>(null)
@@ -63,6 +64,7 @@ export default function Index() {
   }
   return (
     <main>
+      <Navbar />
       <style jsx>{`
         @keyframes down {
           0% { transform: translateY(-10vh); }
@@ -75,6 +77,7 @@ export default function Index() {
           100% { opacity: 1; }
         }
       `}</style>
+      
       <div 
         ref={downwaveRef}
         className="startwaves fixed flex justify-center h-[120vh] w-full bg-[#469ce5] -translate-y-[10vh] animate-[down_3s_ease-out_1s] z-[999]"
