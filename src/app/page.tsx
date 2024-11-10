@@ -42,7 +42,7 @@ export default function Index() {
     }
   }, [])
   const blogPosts = [
-    { id: 1, title: "我的第一篇博客", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
+    { id: 1, title: "Hello World", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
     { id: 2, title: "我最喜欢的旅行目的地", excerpt: "探索我最喜欢的旅行地点，以及为什么它们如此特别。" },
     { id: 3, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
     { id: 4, title: "我的摄影之旅", excerpt: "记录我在摄影领域的探索和成长。" },
@@ -129,7 +129,7 @@ export default function Index() {
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
           <Navbar />
           <header className="text-center mb-12">
-            {/*主标题禁用*/}
+            {/*}
             {/*<h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka&apos;s Blog</h1>*/}
           </header>
           <motion.div 
@@ -151,7 +151,7 @@ export default function Index() {
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold text-gray-800 mb-2">{post.title}</h2>
                   <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                  <Link href={`/blog/${post.id}`} className="text-blue-500 hover:text-blue-600 font-medium">
+                  <Link href={`/blog/${post.title}`} className="text-blue-500 hover:text-blue-600 font-medium">
                     阅读更多
                   </Link>
                 </div>
