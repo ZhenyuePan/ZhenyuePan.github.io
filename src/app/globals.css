@@ -73,7 +73,7 @@ html {
   background-color: #469ce5;
   transform: translateY(-10vh);
   animation-name: down;
-  animation-duration: 3s;
+  animation-duration: 2.5s;
   animation-delay: 1s;
   animation-timing-function: ease-out;
   z-index: 999;
