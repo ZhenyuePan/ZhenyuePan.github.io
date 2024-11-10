@@ -64,7 +64,7 @@ export default function Index() {
   }
   return (
     <main>
-      <Navbar />
+      
       <style jsx>{`
         @keyframes down {
           0% { transform: translateY(-10vh); }
@@ -127,8 +127,10 @@ export default function Index() {
       </div>
       {showBlogContent && (
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
+          <Navbar />
           <header className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka&apos;s Blog</h1>
+            {/*主标题禁用*/}
+            {/*<h1 className="text-4xl font-bold text-gray-800 mb-2">Kafka&apos;s Blog</h1>*/}
           </header>
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"

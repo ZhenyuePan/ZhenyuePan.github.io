@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <span className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-white'}`}>Kafka&apos;s Blog</span>
+              <span className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-black'}`}>Kafka&apos;s Blog</span>
             </Link>
           </div>
           <div className="hidden md:block">
@@ -42,7 +42,7 @@ export default function Navbar() {
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                     isScrolled
                       ? 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
-                      : 'text-white hover:bg-white hover:bg-opacity-20 hover:text-blue-200'
+                      : 'text-black hover:bg-white hover:bg-opacity-20 hover:text-black'
                   }`}
                 >
                   {item.name}
