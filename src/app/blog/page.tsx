@@ -18,7 +18,7 @@ export default async function BlogPage() {
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center text-primary">My Blog</h1>
+        {/*<h1 className="text-4xl font-bold mb-8 text-center text-primary">My Blog</h1>*/}
         <ScrollArea className="h-[calc(100vh-200px)]">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts

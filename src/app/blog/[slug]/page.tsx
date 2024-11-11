@@ -1,5 +1,5 @@
 import { getBlogPosts, getPost } from "@/data/blog"
-import { DATA } from "@/data/resume"
+//import { DATA } from "@/data/resume"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import BlogPostContent from "./blog-post-content"
@@ -23,7 +23,7 @@ export async function generateMetadata({
   }
 
   const { title, publishedAt: publishedTime, summary: description, image } = post.metadata
-  const ogImage = image ? `${DATA.url}${image}` : `${DATA.url}/og?title=${title}`
+  //const ogImage = image ? `${DATA.url}${image}` : `${DATA.url}/og?title=${title}`
 
   return {
     title,
@@ -33,19 +33,19 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `${DATA.url}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+    //  url: `${DATA.url}/blog/${post.slug}`,
+    //  images: [
+    //    {
+    //      url: ogImage,
+    //    },
+    //  ],
     },
     twitter: {
       
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
+     // images: [ogImage],
     },
   }
 }
