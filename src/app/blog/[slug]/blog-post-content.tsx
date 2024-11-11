@@ -16,7 +16,7 @@ interface PostMetadata {
 
 interface Post {
   slug: string
-  //metadata: PostMetadata
+  metadata: PostMetadata
   source: string
 }
 

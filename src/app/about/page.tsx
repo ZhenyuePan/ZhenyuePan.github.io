@@ -25,13 +25,13 @@ export default function About() {
           
           <div className="space-y-4">
             <p className="text-lg">
-              Welcome to my about page! I'm a passionate [your profession/interest] with [X] years of experience in [your field]. 
+              Welcome to my about page! I&apos;m a passionate [your profession/interest] with [X] years of experience in [your field]. 
               I specialize in [your key skills or areas of expertise].
             </p>
             
             <p className="text-lg">
-              When I'm not [working/studying], you can find me [your hobbies or interests]. 
-              I'm always eager to learn new things and take on challenging projects.
+              When I&apos;m not [working/studying], you can find me [your hobbies or interests]. 
+              I&apos;m always eager to learn new things and take on challenging projects.
             </p>
             
             <h2 className="text-2xl font-semibold mt-6 mb-2">Skills</h2>
