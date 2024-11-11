@@ -107,6 +107,7 @@ html {
   height: 100%;
   object-fit: cover;
   position: absolute;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #centertext {
