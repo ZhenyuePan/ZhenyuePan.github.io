@@ -5,22 +5,22 @@ import { Github, Linkedin, Mail } from 'lucide-react'
 import Navbar from '@/components/navbar'
 export default function About() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 ">
       <Navbar />
     
       <Card className="max-w-2xl mx-auto">
         <CardContent className="p-6">
           <div className="flex flex-col items-center mb-6">
             <Image
-              src="/placeholder.svg?height=150&width=150"
-              alt="Your Name"
+              src="/profile.jpg?height=150&width=150"
+              alt="my profile"
               width={150}
               height={150}
               className="rounded-full border-4 border-primary"
               priority
             />
-            <h1 className="text-3xl font-bold mt-4">Your Name</h1>
-            <p className="text-xl text-muted-foreground">Your Title / Position</p>
+            <h1 className="text-3xl font-bold mt-4">Kafka</h1>
+            <p className="text-xl text-muted-foreground">Master / Harbin Institute of Technology</p>
           </div>
           
           <div className="space-y-4">
