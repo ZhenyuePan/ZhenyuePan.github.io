@@ -11,14 +11,33 @@ export const metadata = {
   description: "My thoughts on software development, life, and more.",
 }
 
+interface BlogPost {
+  slug: string;
+  metadata: {
+    title: string;
+    publishedAt: string;
+    summary: string;
+    tags?: string[];
+  };
+}
+
 export default async function BlogPage() {
-  const posts = await getBlogPosts()
+  const rawPosts = await getBlogPosts()
+
+  const posts: BlogPost[] = rawPosts.map(post => ({
+    slug: post.slug,
+    metadata: {
+      title: post.metadata.title || 'Untitled',
+      publishedAt: post.metadata.publishedAt || new Date().toISOString(),
+      summary: post.metadata.summary || 'No summary available',
+      tags: Array.isArray(post.metadata.tags) ? post.metadata.tags : undefined
+    }
+  }))
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        {/*<h1 className="text-4xl font-bold mb-8 text-center text-primary">My Blog</h1>*/}
         <ScrollArea className="h-[calc(100vh-200px)]">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts
@@ -39,7 +58,7 @@ export default async function BlogPage() {
                       </div>
                       {post.metadata.tags && (
                         <div className="flex gap-2">
-                          {post.metadata.tags.slice(0, 2).map((tag) => (
+                          {post.metadata.tags.slice(0, 2).map((tag: string) => (
                             <Badge key={tag} variant="secondary">
                               {tag}
                             </Badge>
