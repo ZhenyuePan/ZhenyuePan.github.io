@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin, Mail, Twitch, X } from 'lucide-react'
 import Navbar from '@/components/navbar'
 export default function About() {
   return (
@@ -25,18 +25,18 @@ export default function About() {
           
           <div className="space-y-4">
             <p className="text-lg">
-              Welcome to my about page! I&apos;m a passionate [your profession/interest] with [X] years of experience in [your field]. 
-              I specialize in [your key skills or areas of expertise].
+              Welcome to my about page! I&apos;m a passionate Coder with 1 years of experience in CS Master. 
+              I specialize in FullStack.
             </p>
             
             <p className="text-lg">
-              When I&apos;m not [working/studying], you can find me [your hobbies or interests]. 
+              When I&apos;m not studying, you can find me watch animate. 
               I&apos;m always eager to learn new things and take on challenging projects.
             </p>
             
             <h2 className="text-2xl font-semibold mt-6 mb-2">Skills</h2>
             <ul className="list-disc list-inside space-y-1">
-              <li>Skill 1</li>
+              <li>C++</li>
               <li>Skill 2</li>
               <li>Skill 3</li>
               <li>Skill 4</li>
@@ -45,21 +45,12 @@ export default function About() {
             <h2 className="text-2xl font-semibold mt-6 mb-2">Contact Me</h2>
             <div className="flex space-x-4">
               <Button variant="outline" size="icon">
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                <a href="https://github.com/ZhenyuePan" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
                   <Github className="h-5 w-5" />
                 </a>
               </Button>
-              <Button variant="outline" size="icon">
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                  <Linkedin className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button variant="outline" size="icon">
-                <a href="mailto:your.email@example.com" aria-label="Email Me">
-                  <Mail className="h-5 w-5" />
-                </a>
-              </Button>
             </div>
+            <p>or mail 664945264@qq.com</p>
           </div>
         </CardContent>
       </Card>

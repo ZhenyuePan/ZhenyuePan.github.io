@@ -21,7 +21,6 @@ export default function Navbar() {
     { name: '首页', href: '/' },
     { name: '博客', href: '/blog' },
     { name: '关于', href: '/about' },
-    { name: '联系', href: '/contact' },
   ]
 
   return (
