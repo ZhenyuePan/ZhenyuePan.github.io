@@ -41,14 +41,14 @@ export default function Index() {
       video1.removeEventListener('ended', handleVideo1End)
     }
   }, [])
-  const blogPosts = [
-    { id: 1, title: "Hello World", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
-    { id: 2, title: "我最喜欢的旅行目的地", excerpt: "探索我最喜欢的旅行地点，以及为什么它们如此特别。" },
-    { id: 3, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
-    { id: 4, title: "我的摄影之旅", excerpt: "记录我在摄影领域的探索和成长。" },
-    { id: 5, title: "美食探险记", excerpt: "品尝各地美食，分享独特的味蕾体验。" },
-    { id: 6, title: "工作与生活的平衡", excerpt: "探讨如何在繁忙的生活中找到平衡点。" },
-  ]
+  // const blogPosts = [
+  //   { id: 1, title: "Hello World", excerpt: "这是我的第一篇博客文章，分享我的故事和经历。" },
+  //   { id: 2, title: "我最喜欢的旅行目的地", excerpt: "探索我最喜欢的旅行地点，以及为什么它们如此特别。" },
+  //   { id: 3, title: "学习新技能的经验", excerpt: "分享我学习新技能的过程和心得体会。" },
+  //   { id: 4, title: "我的摄影之旅", excerpt: "记录我在摄影领域的探索和成长。" },
+  //   { id: 5, title: "美食探险记", excerpt: "品尝各地美食，分享独特的味蕾体验。" },
+  //   { id: 6, title: "工作与生活的平衡", excerpt: "探讨如何在繁忙的生活中找到平衡点。" },
+  // ]
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -138,7 +138,7 @@ export default function Index() {
             initial="hidden"
             animate="visible"
           >
-            {blogPosts.map(post => (
+            {/* {blogPosts.map(post => (
               <motion.div 
                 key={post.id} 
                 className="bg-white rounded-lg shadow-md overflow-hidden"
@@ -156,7 +156,7 @@ export default function Index() {
                   </Link>
                 </div>
               </motion.div>
-            ))}
+            ))} */}
           </motion.div>
         </div>
       )}
