@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+//import Link from 'next/link'
 import { motion } from 'framer-motion'
 import "./globals.css"
 import Navbar from '@/components/navbar'
