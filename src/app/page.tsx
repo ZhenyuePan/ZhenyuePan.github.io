@@ -69,6 +69,7 @@ export default function Index() {
         @keyframes down {
           0% { transform: translateY(-10vh); }
           100% { transform: translateY(110vh); }
+          
         }
         @keyframes out {
           100% { opacity: 0; display: none; }
@@ -80,7 +81,7 @@ export default function Index() {
       
       <div 
         ref={downwaveRef}
-        className="startwaves fixed flex justify-center h-[120vh] w-full bg-[#469ce5] -translate-y-[10vh] animate-[down_3s_ease-out_1s] z-[999]"
+        className="startwaves fixed flex justify-center h-[120vh] w-full bg-[#469ce5] -translate-y-[10vh] animate-[down_3s_ease-out_1s] z-[998]"
         style={{ display: isAnimationEnded ? 'none' : 'flex' }}
       >
         <div className="waves absolute bottom-[120vh] w-full">
