@@ -2,6 +2,7 @@ import { getBlogPosts } from "@/data/blog"
 import BlogHeader from './BlogHeader'
 import BlogPosts from './BlogPosts'
 import Navbar from "@/components/navbar"
+
 export const metadata = {
   title: "Digital Chronicles",
   description: "Exploring the digital realm through code and creativity.",
@@ -31,13 +32,13 @@ export default async function BlogPage() {
   }))
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-10 bg-cover bg-center mix-blend-overlay" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay" />
       <div className="relative">
         <Navbar />
         <BlogHeader />
         <BlogPosts initialPosts={posts} />
-        <footer className="container mx-auto px-4 py-8 text-center text-blue-200/60">
+        <footer className="container mx-auto px-4 py-8 text-center text-gray-500">
           <p>© {new Date().getFullYear()} Digital Chronicles. All rights reserved.</p>
         </footer>
       </div>
