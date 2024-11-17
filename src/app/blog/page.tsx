@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar"
 
 export const metadata = {
   title: "Digital Chronicles",
-  description: "Exploring the digital realm through code and creativity.",
+  description: "Exploring the digital realm throughcode  and creativity.",
 }
 
 interface BlogPost {
