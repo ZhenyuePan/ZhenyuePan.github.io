@@ -18,7 +18,7 @@ export default function Navbar() {
   }, [])
 
   const navItems = [
-    { name: '首页', href: '/' },
+    { name: '首页', href: '/?skip_intro=true' },
     { name: '博客', href: '/blog' },
     { name: '关于', href: '/about' },
   ]
@@ -28,7 +28,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/?skip_intro=true" className="flex-shrink-0">
               <span className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-blue-600'}`}>Kafka&apos;s Blog</span>
             </Link>
           </div>
