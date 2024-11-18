@@ -1,0 +1,274 @@
+---
+title: "Linux入门"
+publishedAt: "2024-11-18"
+summary: "my Linux notes for entry."
+---
+
+# **Linux 常用命令教程**
+
+## 处理目录的常用命令
+
+接下来我们就来看几个常见的处理目录的命令吧：
+
+ls: 列出目录
+
+cd：切换目录
+
+pwd：显示目前的目录
+
+mkdir：创建一个新的目录
+
+rmdir：删除一个空的目录
+
+cp: 复制文件或目录
+
+rm: 移除文件或目录
+
+mv: 移动文件与目录，或修改文件与目录的名称
+
+你可以使用 *man [**命令**]* 来查看各个命令的使用文档，如 ：man cp
+
+## Linux 文件内容查看
+
+Linux 系统中使用以下命令来查看文件的内容：
+
+cat: 由第一行开始显示文件内容
+
+tac: 从最后一行开始显示，可以看出 tac 是 cat 的倒著写！
+
+nl: 显示的时候，顺道输出行号！
+
+more: 一页一页的显示文件内容
+
+less: 与 more 类似，但是比 more 更好的是，他可以往前翻页！
+
+head: 只看头几行
+
+tail: 只看尾巴几行
+
+# **Shell 教程**
+
+Shell 是一个用 c 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是命令语言，又是一种程序设计语言。
+
+Shell 脚本（shellscript），是一种为 shell 编写的脚本程序。业界所说的 shell 通常指的是 shell
+
+脚本。Shell 与 Shell 脚本是两个不同的概念。
+
+Linux 中的 shell 有很多种类，常用的几种：
+
+1> Bourne Shell（/usr/bin/sh 或/bin/sh）
+
+2> Bourne Again Shell（/bin/bash）
+
+3> C Shell（/usr/bin/csh）
+
+4> K Shell（/usr/bin/ksh）
+
+5> Shell for Root（/sbin/sh）
+
+本教程使用的是 Bash，也就是 Bourne Again Shell，由于易用和免费，Bash 在日常工作中被广泛使用。同时，Bash 也是大多数 Linux 系统默认的 Shell。
+
+## 第一个 Shell 脚本
+
+打开文本编辑器（vi/vim），新建一个文件 first.sh，扩展名为 sh（sh 代表 shell）。扩展名并不影响脚本执行。
+
+实例：
+
+```bash
+#!/bin/bash
+echo “Hello World!”
+```
+
+\#! 是一个约定的标记，它告诉系统这个脚本需要什么解释器来执行，即使用哪一种 shell。
+
+echo 命令用于向窗口输出文本。
+
+运行 Shell 脚本方式
+
+-  作为可执行程序
+
+​	将上面的代码保存为 first.sh，并 cd 到相应目录：
+
+​	$ chmod +x first.sh
+
+​	$ ./first.sh
+
+- 作为解释器参数
+
+​	/bin/bash ./first.sh
+
+## Shell 变量
+
+定义变量时，变量名不加美元符号（$），如：
+
+`domain="www.0voice.com"`
+
+注意，变量名与等号之间不能有空格，变量名的命名需遵循如下规则：
+
+1> 命名只能使用英文字母，数字和下划线，首个字符不能以数字开头。
+
+2> 中间不能有空格，可以使用下划线(_)。
+
+3> 不能使用标点符号。
+
+4> 不能使用 bash 里的关键字（可用 help 命令查看保留关键字）
+
+例如，有效的 shell 变量名
+
+```bash
+ zerovoice
+
+ ZERO_VOICE
+
+ _ZERO_VOICE
+
+Zerovoice0
+```
+
+无效的shell变量名
+
+\1. 0voice
+
+\2. ?voice
+
+\3. zero*voice
+
+## 使用变量
+
+使用一个定义过的变量，只要在变量名前面加美元符号即可，如：
+
+![image-20241115200135096](C:\Users\66494\AppData\Roaming\Typora\typora-user-images\image-20241115200135096.png)
+
+变量外的大括号，$domain 与${domain}效果一样。也是为了帮助解释器识别变量边界。
+
+![image-20241115200147620](C:\Users\66494\AppData\Roaming\Typora\typora-user-images\image-20241115200147620.png)
+
+如果不给 skill 变量加上大括号，写成了 echo "I am good at ${skill}Code"，解释器就会把$skillCode 当成一个变量。
+
+## 只读变量
+
+使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变。下面的例子尝试更改只读变量，结果报错：
+
+![image-20241115200236290](C:\Users\66494\AppData\Roaming\Typora\typora-user-images\image-20241115200236290.png)
+
+运行脚本，结果如下：
+
+`readonly variable`
+
+## 删除变量
+
+使用 unset 命令可以删除变量。语法：
+
+`unset variable_name`
+
+变量被删除后不能再次使用。unset 命令不能删除只读变量。
+
+```bash
+#!/bin/bash
+url="http://www.0voice.com"
+unset url
+echo $url
+```
+
+以上实例执行将没有任何输出。
+
+变量类型
+
+运行 shell 时，会同时存在三种变量：
+
+**1) 局部变量** 局部变量在脚本或命令中定义，仅在当前 shell 实例中有效，其他 shell 启动的程序不能访问局部变量。
+
+**2) 环境变量** 所有的程序，包括 shell 启动的程序，都能访问环境变量，有些程序需要环境变量来保证其正常运行。必要的时候 shell 脚本也可以定义环境变量。
+
+**3) shell 变量** shell 变量是由 shell 程序设置的特殊变量。shell 变量中有一部分是环境变量，有一部分是局部变量，这些变量保证了 shell 的正常运行
+
+---
+
+## Shell 字符串
+
+字符串是 shell 编程中最常用最有用的数据类型（除了数字和字符串，也没啥其它类型好用了），字符串可以用单引号，也可以用双引号，也可以不用引号。
+
+### 单引号
+
+单引号字符串的限制：`str='this is a string'`
+
+单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；
+
+单引号字串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。
+
+### 双引号
+
+your_name='0voice'
+
+str="Hello, I know you are \"$your_name\"! \n"
+
+echo -e $str
+
+输出结果为：
+
+Hello, I know you are "0voice"!
+
+双引号的优点：
+
+双引号里可以有变量
+
+双引号里可以出现转义字符
+
+### 拼接字符串
+
+```bash
+1. your_name="0voice"
+2. # 使用双引号拼接
+3. greeting="hello, "$your_name" !"
+4. greeting_1="hello, ${your_name} !"
+5. echo $greeting $greeting_1
+6. # 使用单引号拼接
+7. greeting_2='hello, '$your_name' !'
+8. greeting_3='hello, ${your_name} !'
+9. echo $greeting_2 $greeting_3
+```
+
+输出结果为：
+
+` hello, 0voice ! hello, 0voice !`
+
+### 获取字符串长度
+
+```bash
+1. string="abcd"
+2. echo ${#string} #输出 4
+```
+
+### 提取子字符串
+
+以下实例从字符串第 **2** 个字符开始截取 **4** 个字符：
+
+```bash
+1. string="0voice is a great college"
+2. echo ${string:1:4} # 输出 voic
+```
+
+查找子字符串
+
+查找字符 **i** 或 **o** 的位置(哪个字母先出现就计算哪个)：
+
+```bash
+1. string="0voice is a great college "
+2. echo `expr index "$string" io` # 输出 3
+```
+
+**注意：** 以上脚本中 **`** 是反引号，而不是单引号 **'**，不要看错了哦
+
+## Shell 数组
+
+bash 支持一维数组（不支持多维数组），并且没有限定数组的大小。
+
+类似于 C 语言，数组元素的下标由 0 开始编号。获取数组中的元素要利用下标，下标可以是整数或算术表达式，其值应大于或等于 0。
+
+### 定义数组
+
+在 Shell 中，用括号来表示数组，数组元素用"空格"符号分割开。定义数组的一般形式为：
+
+` 数组名=(值 1 值 2 ... 值 n)`
+
+![image-20241115201159626](C:\Users\66494\AppData\Roaming\Typora\typora-user-images\image-20241115201159626.png)
