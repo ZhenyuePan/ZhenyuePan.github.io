@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
-import "./globals.css"
 import Navbar from '@/components/navbar'
 
-export default function Index() {
+export default function PageContent() {
   const downwaveRef = useRef<HTMLDivElement>(null)
   const video1Ref = useRef<HTMLVideoElement>(null)
   const video2Ref = useRef<HTMLVideoElement>(null)

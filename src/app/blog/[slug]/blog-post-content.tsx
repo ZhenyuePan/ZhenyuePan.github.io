@@ -4,7 +4,7 @@ import { DATA } from "@/data/resume"
 import { formatDate } from "@/lib/utils"
 import { Suspense, useEffect, useState, useRef } from "react"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface PostMetadata {
@@ -31,7 +31,6 @@ export default function BlogPostContent({ post }: { post: Post }) {
       return
     }
 
-    // Extract headings from the post content
     const parser = new DOMParser()
     const doc = parser.parseFromString(post.source, 'text/html')
     const headingElements = doc.querySelectorAll('h1, h2, h3')
@@ -54,7 +53,7 @@ export default function BlogPostContent({ post }: { post: Post }) {
       },
       { 
         rootMargin: '-20% 0px -80% 0px',
-        threshold: 0.1 // Adjust this value to fine-tune when a heading is considered "active"
+        threshold: 0.1
       }
     )
 
@@ -104,34 +103,36 @@ export default function BlogPostContent({ post }: { post: Post }) {
         }}
       />
       
-      <nav className="mb-8" aria-label="Back to blog">
+      <nav className="mb-4 text-sm" aria-label="Back to blog">
         <Link href="/blog" className="text-primary hover:underline flex items-center">
-          <ChevronLeft className="w-4 h-4 mr-2" aria-hidden="true" />
+          <ChevronLeft className="w-3 h-3 mr-1" aria-hidden="true" />
           Back to all posts
         </Link>
       </nav>
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight text-primary mb-2">{post.metadata.title}</h1>
+      
+      <header className="mb-8 text-center">
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary mb-2">{post.metadata.title}</h1>
         <Suspense fallback={<p className="h-5" />}>
-          <p className="text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {formatDate(post.metadata.publishedAt)}
           </p>
         </Suspense>
       </header>
-      <div className="flex flex-col md:flex-row gap-8">
-        <aside className="md:w-50 flex-shrink-0">
+      
+      <div className="flex flex-col lg:flex-row gap-8">
+        <aside className="lg:w-48 flex-shrink-0 order-2 lg:order-1">
           <nav className="sticky top-8" aria-label="Table of contents">
-            <h2 className="text-lg font-semibold mb-4">导航栏</h2>
+            <h2 className="text-xs font-semibold mb-1 text-primary">Contents</h2>
             {headings.length > 0 ? (
-              <ul className="space-y-2">
+              <ul className="space-y-0.5 text-xs">
                 {headings.map((heading) => (
-                  <li key={heading.id} style={{ marginLeft: `${(heading.level - 1) * 12}px` }}>
+                  <li key={heading.id} style={{ marginLeft: `${(heading.level - 1) * 4}px` }}>
                     <button
                       onClick={() => scrollToHeading(heading.id)}
-                      className={`block w-full text-left py-1 px-2 rounded transition-colors ${
+                      className={`block w-full text-left py-0.5 px-1 rounded transition-colors ${
                         activeHeading === heading.id
-                          ? 'bg-primary text-primary-foreground'
-                          : 'hover:bg-muted'
+                          ? 'bg-primary/10 text-primary font-medium'
+                          : 'hover:bg-muted text-muted-foreground'
                       }`}
                     >
                       {heading.text}
@@ -140,31 +141,33 @@ export default function BlogPostContent({ post }: { post: Post }) {
                 ))}
               </ul>
             ) : (
-              <p className="text-muted-foreground">No headings found in this post.</p>
+              <p className="text-xs text-muted-foreground">No headings found in this post.</p>
             )}
           </nav>
         </aside>
-        <article className="flex-grow prose dark:prose-invert max-w-none blog-content">
-        {post.source ? (
-          <div dangerouslySetInnerHTML={{ __html: post.source }} />
-        ) : (
-          <Alert>
-            <AlertTitle>Content Unavailable</AlertTitle>
-            <AlertDescription>
-              The content for this blog post is currently unavailable. Please check back later.
-            </AlertDescription>
-          </Alert>
-        )}
-      </article>
+        
+        <article className="flex-grow order-1 lg:order-2 prose prose-sm dark:prose-invert max-w-none blog-content">
+          {post.source ? (
+            <div dangerouslySetInnerHTML={{ __html: post.source }} />
+          ) : (
+            <Alert>
+              <AlertTitle>Content Unavailable</AlertTitle>
+              <AlertDescription>
+                The content for this blog post is currently unavailable. Please check back later.
+              </AlertDescription>
+            </Alert>
+          )}
+        </article>
       </div>
-      <nav className="mt-8 flex justify-between" aria-label="Post navigation">
+      
+      <nav className="mt-8 flex justify-between text-sm" aria-label="Post navigation">
         <Link href="/blog" className="text-primary hover:underline flex items-center">
-          <ChevronLeft className="w-4 h-4 mr-2" aria-hidden="true" />
+          <ChevronLeft className="w-3 h-3 mr-1" aria-hidden="true" />
           Back to all posts
         </Link>
         <Link href="#" className="text-primary hover:underline flex items-center">
           Back to top
-          <ChevronRight className="w-4 h-4 ml-2" aria-hidden="true" />
+          <ChevronRight className="w-3 h-3 ml-1" aria-hidden="true" />
         </Link>
       </nav>
     </div>
