@@ -3,17 +3,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Github } from 'lucide-react'
 import Navbar from '@/components/navbar'
-import BlurFade from '@/components/magicui/blur-fade'
+//import BlurFade from '@/components/magicui/blur-fade'
 
-const BLUR_FADE_DELAY = 0.04;
+//const BLUR_FADE_DELAY = 0.04;
 
 export default function About() {
   return (
     <div className="container mx-auto px-4 py-8">
       <Navbar />
 
-      <Card className="max-w-2xl mx-auto">
-        <BlurFade delay={BLUR_FADE_DELAY}>
+      <Card className="max-w-2xl mx-auto animate-fade-in">
           <CardContent className="p-6">
             <div className="flex flex-col items-center mb-6">
               <Image
@@ -58,7 +57,6 @@ export default function About() {
               <p>or mail 664945264@qq.com</p>
             </div>
           </CardContent>
-        </BlurFade>
       </Card>
     </div>
   )
