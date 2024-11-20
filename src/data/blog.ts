@@ -18,11 +18,20 @@ export async function markdownToHTML(markdown: string) {
     .use(remarkParse)
     .use(remarkRehype)
     .use(rehypePrettyCode, {
-      theme: {
-        light: "min-light",
-        dark: "min-dark",
+      theme: "github-light",
+      onVisitLine(node) {
+        // Prevent lines from collapsing in `display: grid` mode, and
+        // allow empty lines to be copy/pasted
+        if (node.children.length === 0) {
+          node.children = [{ type: "text", value: " " }];
+        }
       },
-      keepBackground: false,
+      onVisitHighlightedLine(node) {
+        node.properties.className.push("highlighted");
+      },
+      onVisitHighlightedWord(node) {
+        node.properties.className = ["word"];
+      },
     })
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings)

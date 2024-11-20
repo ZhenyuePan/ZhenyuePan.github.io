@@ -79,7 +79,7 @@ export default function BlogPostContent({ post }: { post: Post }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white text-gray-900">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -103,36 +103,36 @@ export default function BlogPostContent({ post }: { post: Post }) {
         }}
       />
       
-      <nav className="mb-4 text-sm" aria-label="Back to blog">
-        <Link href="/blog" className="text-primary hover:underline flex items-center">
-          <ChevronLeft className="w-3 h-3 mr-1" aria-hidden="true" />
-          Back to all posts
+      <nav className="mb-8 text-sm" aria-label="Back to blog">
+        <Link href="/blog" className="text-gray-500 hover:text-gray-900 transition-colors duration-200 flex items-center">
+          <ChevronLeft className="w-4 h-4 mr-1" aria-hidden="true" />
+          Back to all articles
         </Link>
       </nav>
       
-      <header className="mb-8 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary mb-2">{post.metadata.title}</h1>
+      <header className="mb-16 text-center">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-4">{post.metadata.title}</h1>
         <Suspense fallback={<p className="h-5" />}>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-lg text-gray-500">
             {formatDate(post.metadata.publishedAt)}
           </p>
         </Suspense>
       </header>
       
-      <div className="flex flex-col lg:flex-row gap-8">
-        <aside className="lg:w-48 flex-shrink-0 order-2 lg:order-1">
+      <div className="flex flex-col lg:flex-row gap-12">
+        <aside className="lg:w-64 flex-shrink-0 order-2 lg:order-1">
           <nav className="sticky top-8" aria-label="Table of contents">
-            <h2 className="text-xs font-semibold mb-1 text-primary">Contents</h2>
+            <h2 className="text-lg font-semibold mb-4 text-gray-900">Contents</h2>
             {headings.length > 0 ? (
-              <ul className="space-y-0.5 text-xs">
+              <ul className="space-y-2 text-sm">
                 {headings.map((heading) => (
-                  <li key={heading.id} style={{ marginLeft: `${(heading.level - 1) * 4}px` }}>
+                  <li key={heading.id} style={{ marginLeft: `${(heading.level - 1) * 8}px` }}>
                     <button
                       onClick={() => scrollToHeading(heading.id)}
-                      className={`block w-full text-left py-0.5 px-1 rounded transition-colors ${
+                      className={`block w-full text-left py-1 px-2 rounded transition-colors duration-200 ${
                         activeHeading === heading.id
-                          ? 'bg-primary/10 text-primary font-medium'
-                          : 'hover:bg-muted text-muted-foreground'
+                          ? 'bg-gray-100 text-gray-900 font-medium'
+                          : 'hover:bg-gray-50 text-gray-600'
                       }`}
                     >
                       {heading.text}
@@ -141,12 +141,12 @@ export default function BlogPostContent({ post }: { post: Post }) {
                 ))}
               </ul>
             ) : (
-              <p className="text-xs text-muted-foreground">No headings found in this post.</p>
+              <p className="text-sm text-gray-600">No headings found in this post.</p>
             )}
           </nav>
         </aside>
         
-        <article className="flex-grow order-1 lg:order-2 prose prose-sm dark:prose-invert max-w-none blog-content">
+        <article className="flex-grow order-1 lg:order-2 prose prose-lg max-w-none blog-content">
           {post.source ? (
             <div dangerouslySetInnerHTML={{ __html: post.source }} />
           ) : (
@@ -160,14 +160,14 @@ export default function BlogPostContent({ post }: { post: Post }) {
         </article>
       </div>
       
-      <nav className="mt-8 flex justify-between text-sm" aria-label="Post navigation">
-        <Link href="/blog" className="text-primary hover:underline flex items-center">
-          <ChevronLeft className="w-3 h-3 mr-1" aria-hidden="true" />
-          Back to all posts
+      <nav className="mt-16 flex justify-between text-sm" aria-label="Post navigation">
+        <Link href="/blog" className="text-gray-500 hover:text-gray-900 transition-colors duration-200 flex items-center">
+          <ChevronLeft className="w-4 h-4 mr-1" aria-hidden="true" />
+          Back to all articles
         </Link>
-        <Link href="#" className="text-primary hover:underline flex items-center">
+        <Link href="#" className="text-gray-500 hover:text-gray-900 transition-colors duration-200 flex items-center">
           Back to top
-          <ChevronRight className="w-3 h-3 ml-1" aria-hidden="true" />
+          <ChevronRight className="w-4 h-4 ml-1" aria-hidden="true" />
         </Link>
       </nav>
     </div>
