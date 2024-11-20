@@ -4,7 +4,7 @@ import BlogPosts from './BlogPosts'
 import Navbar from "@/components/navbar"
 
 export const metadata = {
-  title: "Digital Chronicles",
+  title: "Kafka's Blog",
   description: "Exploring the digital realm throughcode  and creativity.",
 }
 
