@@ -3,9 +3,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Github } from 'lucide-react'
 import Navbar from '@/components/navbar'
-//import BlurFade from '@/components/magicui/blur-fade'
-
-//const BLUR_FADE_DELAY = 0.04;
 
 export default function About() {
   return (
