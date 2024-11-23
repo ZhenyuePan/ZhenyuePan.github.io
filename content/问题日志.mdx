@@ -1,0 +1,1703 @@
+---
+title: "daily note"
+publishedAt: "2024-08-23"
+summary: "Tanks for watching."
+---
+#  问题日志
+
+# 2024
+
+> Operating System: A body of software, in fact, that is responsible for making it easy to run programs (even allowing you to seemingly run many at the same time), allowing programs to share memory, enabling programs to interact with devices, and other fun stuff like that. (OSTEP)
+
+***
+
+# todo list
+
+9.14
+
+- [x] 宪法
+- [ ] 论文写作mooc
+- [x] ~~数据库~~数据库之间的异同，算索引
+- [x] ~~入党申请书~~
+- [x] 轮滑
+- [x] 参保
+- [ ] 学生证
+- [x] 智慧团建
+- [ ] ~~研究生会竞选~~
+- [x] 数据库作业
+- [ ] 组合数学作业
+- [ ] 1.任选新型数据库，参考一系列文献
+- [ ] 2.ppt 内容：数据库基本特征
+- [ ] 哪些基本概念
+- [ ] 体检预约
+
+***
+
+### 日常打卡
+
+CS106L(C++),CS106B/X(C++面向对象),CS144(计算机网络),15-213(CSAPP),6.S081(OS),jyyOS,njuPA,6.824（分布式系统），15-445（数据库系统)
+
+------
+
+### 八月总结 9.18
+
+8月23日开学
+
+三个星期多四天，学习了vim，git，cmake
+
+操作系统看了一半
+
+数据库看了一点点
+
+学习了动态规划算法
+
+----
+
+### 九月总结 9.30
+
+lc 刷了六个题
+
+操作系统并行看完了
+
+学习了git，shell命令行的用法
+
+配置好了环境
+
+制定好了寒假的一个尝试实习的计划
+
+### ♥期末考试时间整理
+
+数据库：第13周周二晚上6点30至8点30
+
+地点诚意107（11.19，21）
+
+ 组合数学：
+
+### 关于一些工具链and技术栈
+
+1.vim,git，shell，linux，gcc编译
+
+未学:**gdb，cmake，makefile🐕,mysql**
+
+**redis,kafka,nginx**
+
+### 一个windows桌面应用
+
+用 C++ 完全可以开发一个集成课程表、每日打卡、番茄时钟功能的桌面应用。以下是相关的知识和技术点：
+
+#### 一、用户界面
+
+1. Windows API（适用于 Windows 平台）
+   - 概述
+     - Windows API（Application Programming Interface）提供了创建 Windows 桌面应用所需的各种函数。可以直接调用这些函数来创建窗口、按钮、文本框等各种界面元素。
+   - 需要学习的内容
+     - 窗口创建与管理：学习如何使用`CreateWindowEx`函数创建窗口，设置窗口的样式、大小和位置，以及如何处理窗口消息（如`WM_CREATE`、`WM_PAINT`、`WM_DESTROY`等消息）。
+     - 控件创建：掌握使用 Windows API 创建常见控件，如`CreateButton`函数创建按钮，`CreateEdit`函数创建文本编辑框等。
+     - 消息循环：理解并实现消息循环机制，通过`GetMessage`、`TranslateMessage`和`DispatchMessage`函数来处理用户输入和系统消息。
+2. Qt 框架
+   - 概述
+     - Qt 是一个跨平台的 C++ 图形用户界面（GUI）框架，可用于开发在 Windows、Linux、macOS 等多个平台上运行的桌面应用。
+   - 需要学习的内容
+     - Qt 基础：学习 Qt 的基本概念，如信号与槽机制（用于对象间的通信）、布局管理（如`QVBoxLayout`、`QHBoxLayout`等布局类）、事件处理等。
+     - 控件使用：掌握 Qt 中的各种控件，如`QPushButton`（按钮）、`QTableWidget`（可用于课程表显示）、`QTimer`（可用于番茄时钟计时）等的使用方法。
+     - 跨平台开发：如果有跨平台需求，要学习如何使用 Qt 进行跨平台编译和部署，确保应用在不同操作系统上的兼容性。
+
+#### 二、数据处理
+
+1. 课程表数据结构
+   - 可以使用`vector`、`map`等标准模板库（STL）容器来存储课程表数据。例如，使用`vector<vector<string>>`来表示课程表的二维结构（行代表星期几，列代表时间段），或者使用`map`来建立课程名称与上课时间等属性的映射关系。
+2. 打卡数据存储
+   - 可以使用文件存储打卡数据。例如，使用`ofstream`和`ifstream`来进行文件的写入和读取操作。如果需要更复杂的数据管理，也可以考虑使用数据库，如 SQLite。C++ 可以通过 SQLite 的 C API 来与 SQLite 数据库交互，实现数据的存储、查询和更新。
+3. 番茄时钟的计时逻辑
+   - 利用`chrono`库来处理时间相关的操作。例如，使用`std::chrono::steady_clock`来获取高精度的时间，通过计算时间差来实现番茄时钟的计时功能。同时，可以使用`std::thread`或`std::async`来处理与计时相关的异步操作，例如在计时过程中响应用户的暂停、继续操作。
+
+#### 三、功能实现
+
+1. 课程表功能
+   - 数据读取与显示：从文件或者数据库中读取课程表数据，并在界面上以合适的方式显示。可以使用前面提到的界面框架中的表格控件或者自定义绘图来显示课程信息。
+   - 课程表编辑：实现添加、删除、修改课程等功能。这涉及到界面交互（如点击按钮弹出编辑窗口）以及对数据结构的操作（如更新`vector`或者`map`中的数据）。
+2. 每日打卡功能
+   - 打卡操作：在界面上设置打卡按钮，当用户点击时，记录打卡时间并存储到文件或者数据库中。可以根据打卡数据统计打卡天数、连续打卡天数等信息，并在界面上显示相关统计结果。
+   - 提醒功能：利用系统定时器（如 Windows 下的`SetTimer`函数或者 Qt 中的`QTimer`）来设置每日打卡提醒，当到达设定的打卡时间时，弹出提醒窗口或者发出提醒声音。
+3. 番茄时钟功能
+   - 计时与状态管理：使用`chrono`库来进行计时，在计时过程中改变界面上的显示状态（如倒计时数字的更新）。通过变量来记录番茄时钟的状态（如正在计时、暂停、结束），并根据用户操作（如点击开始 / 暂停按钮）来切换状态。
+   - 番茄时段管理：设置番茄时钟的工作时间（例如 25 分钟）和休息时间（例如 5 分钟），当一个番茄时段结束后，自动切换到下一个时段，并发出相应的提示音或者通知。
+
+----
+
+## 算法整理
+
+### 回溯，贪心，dp
+
+## 常用API整理
+
+### ❤STL相关：
+
+### `std::vector<T>`
+
+- `push_back(const T& value)`: 添加元素至末尾
+- `pop_back()`: 移除末尾元素
+- `size()`: 获取元素数量
+- `empty()`: 检查容器是否为空
+- `clear()`: 清空容器
+- `begin()`, `end()`: 获取迭代器
+
+### `std::list<T>`
+
+- `push_back(const T& value)`, `push_front(const T& value)`: 添加元素
+- `pop_back()`, `pop_front()`: 移除元素
+- `size()`, `empty()`, `clear()`: 同`std::vector`
+- `begin()`, `end()`: 获取迭代器
+
+### `std::set<T>`
+
+- `insert(const T& value)`: 插入元素
+- `erase(const T& value)`: 删除元素
+- `find(const T& value)`: 查找元素
+- `size()`, `empty()`, `clear()`, `begin()`, `end()`: 同`std::vector`
+
+### `std::map<K, V>`, `std::unordered_map<K, V>`
+
+- `insert(std::make_pair(key, value))`: 插入键值对
+- `erase(const K& key)`: 根据键删除元素
+- `find(const K& key)`: 查找键
+- `size()`, `empty()`, `clear()`, `begin()`, `end()`: 同`std::vector`
+
+### `std::queue<T>`
+
+- `push(const T& value)`: 添加元素至末尾
+- `pop()`: 移除首元素
+- `front()`: 获取首元素
+- `size()`, `empty()`: 同`std::vector`
+
+### `std::stack<T>`
+
+- `push(const T& value)`: 添加元素至顶部
+- `pop()`: 移除顶部元素
+- `top()`: 获取顶部元素
+- `size()`, `empty()`: 同`std::vector`
+
+### `std::priority_queue<T>`
+
+- `push(const T& value)`: 插入元素
+- `pop()`: 移除顶部元素
+- `top()`: 获取顶部元素
+- `size()`, `empty()`: 同`std::vector`
+
+### std::string
+
+构造函数
+
+- `string()` - 创建一个空字符串
+- `string(const string& str)` - 拷贝构造函数
+- `string(const char* s)` - 从 C 字符串构造
+- `string(size_t n, char c)` - 使用 n 个字符 c 构造
+
+元素访问
+
+- `at(size_t pos)` - 访问指定位置的字符（带边界检查）
+- `operator[](size_t pos)` - 访问指定位置的字符
+- `back()` - 访问最后一个字符
+- `front()` - 访问第一个字符
+
+修改器
+
+- `append(const string& str)` - 追加字符串
+- `push_back(char c)` - 追加字符
+- `insert(size_t pos, const string& str)` - 插入字符串
+- `erase(size_t pos = 0, size_t len = npos)` - 删除子字符串
+- `replace(size_t pos, size_t len, const string& str)` - 替换子字符串
+- `clear()` - 清除内容
+- `swap(string& str)` - 交换内容
+
+容量
+
+- `size()` - 返回字符串长度
+- `length()` - 返回字符串长度（与 `size()` 相同）
+- `empty()` - 检查字符串是否为空
+- `resize(size_t n, char c)` - 改变大小
+
+查找
+
+- `find(const string& str, size_t pos = 0) const` - 查找子字符串
+- `rfind(const string& str, size_t pos = npos) const` - 从右侧开始查找子字符串
+
+### std::deque
+
+构造函数
+
+- `deque()` - 创建一个空双端队列
+- `deque(size_t n, const T& value)` - 创建包含 n 个元素的双端队列
+
+元素访问
+
+- `at(size_t pos)` - 访问指定位置的元素（带边界检查）
+- `operator[](size_t pos)` - 访问指定位置的元素
+- `front()` - 访问第一个元素
+- `back()` - 访问最后一个元素
+
+修改器
+
+- `push_back(const T& value)` - 在末尾插入元素
+- `push_front(const T& value)` - 在开头插入元素
+- `pop_back()` - 移除末尾元素
+- `pop_front()` - 移除开头元素
+- `insert(iterator pos, const T& value)` - 在指定位置插入元素
+- `erase(iterator pos)` - 删除指定位置的元素
+- `clear()` - 清除内容
+- `swap(deque& x)` - 交换内容
+
+容量
+
+- `size()` - 返回队列的大小
+- `empty()` - 检查队列是否为空
+- `resize(size_t n, value_type val = value_type())` - 改变大小
+
+### ❤处理字符串相关：
+
+getline
+
+```text
+std::string line;
+std::getline( cin, line ); // 从标准输入读取一整行
+```
+
+stringstream
+
+- `str()`: 获取或设置流中的字符串内容
+- `get()`: 获取下一个字符
+- `<<`: 插入操作符，将数据插入到流中
+- `>>`: 提取操作符，从流中提取数据
+- `clear()`: 清除流的状态标志
+- `peek()`: 查看下一个字符
+
+`"1,234,567"`去掉逗号，可以通过以下方法来实现：
+
+```text
+  string input = "1,234,567";
+  string output;
+  stringstream ss(input);
+  
+  char ch;
+// 法一
+  while (ss >> ch) {
+    if (ch != ',') {
+      output += ch;
+    }
+  }
+// 法二
+  while (ss.peek() != EOF) { // 查看下一个字符，但不提取
+    char ch = ss.get(); // 从流中提取下一个字符
+    if (ch != ',') {
+      output += ch;
+    }
+  }
+```
+
+
+
+### ❤**C 字符串处理函数:**
+
+字符串长度
+
+- - `strlen(const char* str)` - 返回字符串 `str` 的长度
+
+字符串比较
+
+- - `strcmp(const char* str1, const char* str2)` - 比较两个字符串。如果相等返回 0，`str1` 大于 `str2` 返回正数，`str1` 小于 `str2` 返回负数
+  - `strncmp(const char* str1, const char* str2, size_t n)` - 比较两个字符串的前 `n` 个字符
+
+字符串拷贝
+
+- - `strcpy(char* dest, const char* src)` - 将 `src` 字符串拷贝到 `dest`
+  - `strncpy(char* dest, const char* src, size_t n)` - 将 `src` 的前 `n` 个字符拷贝到 `dest`
+
+字符串连接
+
+- - `strcat(char* dest, const char* src)` - 将 `src` 字符串追加到 `dest` 末尾
+  - `strncat(char* dest, const char* src, size_t n)` - 将 `src` 的前 `n` 个字符追加到 `dest` 末尾
+
+字符串查找
+
+- - `strstr(const char* a, const char* b)` - 在 a 中查找第一次出现 `b`的位置
+
+其他
+
+- - `memset(void* ptr, int value, size_t num)` - 将 `ptr` 开始的 `num` 字节设置为 `value`
+  - `memcpy(void* dest, const void* src, size_t num)` - 从 `src` 拷贝 `num` 字节到 `dest`
+  - `memmove(void* dest, const void* src, size_t num)` - 与 `memcpy` 类似，但处理重叠区域
+
+
+
+### ❤比较函数
+
+超级容易混淆，记忆点总结：
+
+- sort 默认小的优先，即升序。[优先队列](https://zhida.zhihu.com/search?content_id=232516329&content_type=Article&match_order=1&q=优先队列&zhida_source=entity)默认大顶。
+- 用 > 的比较函数与 std::greater 同义，都是大的优先。
+- sort 用 greater 或 > 的含义是大的优先。优先队列相反。
+- 只有sort可以直接用lambda表达式，stl需要用有比较函数的类型。
+
+```cpp
+sort(v.begin(), v.end()); // 升序
+sort(v.begin(), v.end(), less<int>()); // 同默认，升序排序
+sort(v.begin(), v.end(), greater<int>()); // 降序
+sort(v.begin(), v.end(), [](int a, int b) { return a > b; }); // 降序排序
+sort(v.begin(), v.end(), [](int a, int b) { return a < b; }); // 升序排序
+
+
+priority_queue<int> pq; // 最大元素优先
+priority_queue<int, std::vector<int>, less<int> > pq; // 同默认，最大元素优先
+priority_queue<int, std::vector<int>, greater<int> > pq; // 最小元素优先
+
+
+struct Person {
+    int age;
+    std::string name;
+};
+struct CompareAge {
+    bool operator()(const Person& a, const Person& b) const {
+        return a.age < b.age;
+    }
+};
+std::set< Person , CompareAge > s;
+std::priority_queue< Person, std::vector<Person> , CompareAge  > q;
+```
+
+## 8.26  
+
+### 快速排序-acwing
+
+```c++
+
+/**
+ * 快速排序算法的实现
+ *
+ *  q 待排序的整数数组
+ *  l 数组的左边界
+ *  r 数组的右边界
+ */
+#include <iostream>
+#include <algorithm>
+using namespace std;
+#define maxn 100100
+//此处应该是#define maxn 10010
+而不是 #define maxn = 10010;
+不用分号和等号
+
+
+void quick_sort(int q[],int l,int r)
+//此处中间用逗号隔开，而非分号
+{
+if(l>=r) return;
+int i = l-1,j=r+1, x = q[(i + j)/2];
+    //此处除号应为>>
+while(i<j)
+{
+    do i++;while(q[i]<x);
+    do j--;while(q[j]>x);//此处为--
+    if(i<j) swap(q[i],q[j]);
+}
+quick_sort(q,l,j);
+quick_sort(q,j+1,r);
+}
+int main()
+{
+int q[maxn];//此处不需要={0}
+int n;
+cin>>n;
+for(int i=0;i<n;i++)
+{
+    cin>>q[i];
+}
+quick_sort(q,0,n-1);//此处注意边界
+for(int i=0;i<n;i++)
+{
+    cout<<q[i]<<" ";
+}
+}
+```
+
+### 第k个数-acwing
+
+```c++
+#include<iostream>
+#include<algorithm>
+using namespace std;
+#define maxn 100010
+int q[maxn];
+void quick_sort(int q[],int l,int r)
+{
+    if(l>=r) return;
+    int i = l-1,j=r+1,x = q[i+j>>1];//注意此处i=l-1 而非l+1
+    while(i<j){
+        do i++;while(q[i]<x);
+        do j--;while(q[j]>x);
+        if(i<j) swap(q[i],q[j]);
+    }
+    quick_sort(q,l,j);
+    quick_sort(q,j+1,r);
+}
+int main()
+{
+    int n,k;
+    cin>>n,cin>>k;
+    for(int i = 0;i<n;i++)
+    {
+        cin>>q[i];
+    }
+    quick_sort(q,0,n-1);
+    cout<<q[k-1];
+}
+```
+
+## 9.1 dynamic planning acwing
+
+### 0-1背包
+
+```c++
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1010;
+int W[N],V[N];
+int f[N][N];//此处全局变量默认为全0
+int n,m;
+int main()
+{
+    cin>>n>>m;
+    for(int i = 1;i<=n;i++)
+     cin>>V[i]>>W[i];
+    for(int i = 1;i<=n;i++)//此处循环注意是等号，和平时习惯不太一样
+        for(int j = 0;j <= m;j++){
+        f[i][j] = f[i-1][j];
+        if(j>=V[i]) f[i][j] = max(f[i][j],f[i-1][j-V[i]]+W[i]);
+        }
+        cout<<f[n][m]<<endl;
+        return 0;
+}
+```
+
+### 完全背包问题
+
+```c++
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N =1010;
+int f[N][N];
+int V[N],W[N];
+int n,m;
+int main()
+{
+    cin>>n>>m;
+    for(int i = 1;i<=n;i++)
+    cin>>V[i]>>W[i];
+    for(int i = 1;i<=n;i++)
+        for(int j =0;j<=m;j++){
+        f[i][j] = f[i-1][j];
+        if(j>=V[i]) f[i][j] = max(f[i][j],f[i][j-V[i]]+W[i]);
+        }
+        cout<<f[n][m]<<endl;
+        return 0;
+}
+```
+
+## 9.4
+
+### ❤多重背包问题II
+
+```c++
+#include<iostream>
+using namespace std;
+
+const int N = 12010, M = 2010;
+
+int n, m;
+int v[N], w[N]; //逐一枚举最大是N*logS
+int f[M]; // 体积<M
+
+int main()
+{
+    cin >> n >> m;
+    int cnt = 0; //分组的组别
+    for(int i = 1;i <= n;i ++)
+    {
+        int a,b,s;
+        cin >> a >> b >> s;
+        int k = 1; // 组别里面的个数
+        while(k<=s)
+        {
+            cnt ++ ; //组别先增加
+            v[cnt] = a * k ; //整体体积
+            w[cnt] = b * k; // 整体价值
+            s -= k; // s要减小
+            k *= 2; // 组别里的个数增加
+        }
+        //剩余的一组
+        if(s>0)
+        {
+            cnt ++ ;
+            v[cnt] = a*s; 
+            w[cnt] = b*s;
+        }
+    }//注意括号
+
+    n = cnt ; //枚举次数正式由个数变成组别数
+
+    //01背包一维优化
+    for(int i = 1;i <= n ;i ++)
+        for(int j = m ;j >= v[i];j --)
+            f[j] = max(f[j],f[j-v[i]] + w[i]);
+
+    cout << f[m] << endl;
+    return 0;
+}
+```
+
+## 9.5
+
+### 最长上升子序列
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1010;
+int f[N];
+int W[N];
+int main()
+{
+    int mx = 0;
+    int n;
+    cin>>n;
+    for(int i = 1; i <= n ;i++)
+    {
+        cin>>W[i];
+    }
+    for(int i = 1; i <= n ;i++)
+    {
+        f[i] = 1;
+        for(int j  = 1 ; j<i ; j++)
+        if(W[i]>W[j]) f[i] = max(f[j]+1,f[i]);
+    }
+    for(int i = 1;i <= n ; i ++)
+    mx = max(f[i],mx);
+    cout<<mx;
+    return 0;
+}
+```
+
+### 数字三角形
+
+```cpp
+#include <iostream>
+using namespace std;
+const int N = 510;
+#define INF  -1e9;
+int f[N][N];
+int W[N][N];
+int main()
+{
+    int n;
+    cin>>n;
+    int mx= INF ;
+    for(int i = 1 ; i <= n ; i++ )
+        for(int j = 0;j <= n;j++){//此处注意从0开始
+        W[i][j] = INF;
+        f[i][j] = INF;
+        }
+    for(int i = 1 ; i <= n ; i++ )
+        for(int j = 1;j <= i;j++ )
+        {
+            cin>>W[i][j];
+        }
+    for(int i = 1 ; i <= n ; i++ )
+        for(int j = 1;  j<=i    ;j++ )
+        f[i][j] = max(f[i-1][j-1]+W[i][j],f[i-1][j]+W[i][j]);
+    for(int j = 1;  j <= n    ;j++ )
+    mx = max(mx,f[n][j]);
+    cout<<mx<<endl;
+    return 0;
+}
+```
+
+
+
+### 最长公共子序列
+
+```cpp
+#include <iostream>
+using namespace std;
+const int N  = 1010;
+char A[N],B[N];
+int f[N][N];
+int main()
+{
+    int n,m;
+    scanf("%d%d",&n,&m);
+    scanf("%s%s",A+1,B+1);
+    for(int i = 1;i<=n; i ++)
+        for(int j = 1;j<=m; j ++)
+        {
+            f[i][j] = max(f[i-1][j],f[i][j-1]);
+            if(A[i]==B[j]) f[i][j] = max(f[i][j],f[i-1][j-1]+1);//不是=
+        }
+        printf("%d",f[n][m]);
+        return 0;
+}
+```
+
+## 9.6
+
+### 合并石子
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 310;
+int f[N][N];
+
+int S[N];
+const int INF = 1e8;
+int main()
+{
+int n ;
+cin >> n;
+//memset(f[N][N])= INF;
+for(int i = 1;i <=n ; i++)
+{
+    cin>>S[i];
+}
+for(int i = 1;i <= n ; i++)
+{
+    S[i] += S[i-1];
+    //printf("S[%d]=%d\n",i,S[i]);
+}
+//printf("n = %d\n",n);
+for(int len = 2 ; len <= n ; len ++)
+{
+   // printf("执行len = %d\nn = %d\ncs =%d\n",len,n,len <= n);
+    for(int i = 1; i + len -1 <= n ; i++)
+    {
+        int l = i, r = i + len -1;
+        f[l][r] = 1e9;//这里别忘了初始化
+        for(int k = l ;k < r;k++)
+        {
+            f[l][r] = min(f[l][r],f[l][k]+f[k+1][r]+S[r]-S[l-1]);
+            //printf("f[%d][%d]=%d\n",l,r,f[l][r]);
+        }
+        //return 0;
+    }
+} 
+cout<<f[1][n]<<endl;//写的时候不小心进循环了
+return 0;//这个进循环会导致程序只执行一次，果然机器永远不会出错
+}
+```
+
+## 9.28 LChot100 hashmap 
+
+### 1.两数之和
+
+```cpp
+//leetcode 1.两数之和
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> hash_map;//这里用到数据结构哈希表
+        for(int i = 0;i < nums.size(); i++){
+            auto it = hash_map.find(target - nums[i]);//遍历数组，如果找到结果返回到it
+            if(it != hash_map.end())
+                return {it->second,i};
+            hash_map[nums[i]] = i;
+        }
+        return {};//必须每一个分支都能返回数值
+    }
+};
+```
+
+对STL容器不熟悉
+
+### 49.字母异位词分组
+
+```cpp
+ vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        //vector<vector<string>> result;
+        unordered_map<string,vector<string>> hashtable;
+        for(int i = 0;i<strs.size();i++)
+        {
+            string key = strs[i];
+            sort(key.begin(),key.end());
+            hashtable[key].push_back(strs[i]);
+        }
+        vector<vector<string>> ans;
+        for(auto it = hashtable.begin();it!=hashtable.end();it++)
+        ans.push_back(it->second);
+        return ans;
+    }
+```
+
+题解：https://www.bilibili.com/video/BV1vP4y1F7A6/?spm_id_from=333.337.search-card.all.click&vd_source=29f25fe9fa4a2863c90bcdd8fffe07ce
+
+### 128.最长连续序列
+
+```cpp
+ int longestConsecutive(vector<int>& nums){     
+		unordered_set<int> hashtable(nums.begin(),nums.end());
+        int ans = 0;
+        for(int num : hashtable)
+        {   
+            int x = num;
+            if(!hashtable.count(x-1))
+            while(hashtable.count(x)) x++;
+            ans  = max(ans,x-num);
+        }
+        return ans;
+    }
+```
+
+## 9.29 LChot100  双指针
+
+### 283.移动零
+
+``` cpp
+void moveZeroes(vector<int>& nums) {
+      int j  = 0 ;
+      for(int i = 0 ;i<nums.size() ; i++)
+      {
+          if(nums[i]){            
+          swap(nums[i],nums[j]);
+          j++;
+      }
+    }
+```
+
+### ❤11.盛最多水的容器
+
+```cpp
+int maxArea(vector<int>& height) {
+        int right = height.size()-1;
+        int left = 0;
+        int mx = 0;
+        while(left<right){
+            mx = max(mx,min(height[left],height[right])*(right-left));
+            if(left<right&&height[right]<height[left]) 				right--;
+            else  left++;
+        }
+        return mx;
+    }
+```
+
+此题范式
+
+### ❤15.三数之和
+
+```cpp
+    vector<vector<int>> threeSum(vector<int>& nums) {
+    vector<vector<int>> ans;
+    sort(nums.begin(),nums.end());//先排序
+    int left,right = 0;
+    for(int i = 0  ; i < nums.size()-1;i++)
+    {
+        if (nums[i] > 0) 
+        return ans;//若第一个数大于0，则直接返回
+        if(i>0&&nums[i]==nums[i-1]) continue;//如果写在while里面会导致000通不过
+        left = i+1,right = nums.size()-1;//左右指针向中间逼近
+        while(left<right){//经典双指针循环结构
+        if(nums[i]+nums[left]+nums[right]>0) right--;
+            //依靠if else 进行行为选择
+            //大于则右指针向左移
+        else if(nums[i]+nums[left]+nums[right]<0) left++;
+            //小于则左指针向右移
+        else{//等于的情况
+        ans.push_back(vector<int>{nums[i],nums[left],nums[right]});//将此时的三元组压栈
+        while(right>left&&nums[right]==nums[right-1]) 			right--;//去重
+        while(right>left&&nums[left]==nums[left+1]) 			left++;//去重
+        left++;//结尾向中间
+        right--;
+                }
+         }
+    }
+    return ans;
+    }
+```
+
+此题特别注意去重！
+
+## 9.30 LChot100 单调栈
+
+### ❤❤经典42.接雨水
+
+解法一：动态规划
+
+解法二：单调栈
+
+解法三：双指针
+
+### 739.每日温度
+
+解法一：暴力 time exceeding
+
+```cpp
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        vector<int> ans;
+        for(int i = 0 ; i <= temperatures.size()-1 ; i ++){
+            for(int j = i + 1 ; j <= temperatures.size();j++){
+                if(j<temperatures.size()&&temperatures[i]<temperatures[j]){
+                ans.push_back(j-i);
+                break;
+                }
+                else if(j==temperatures.size()){
+                    ans.push_back(0);
+                    break;
+                }
+                
+            }
+        }
+        return ans;
+    }
+```
+
+解法二：单调栈
+
+```cpp
+vector<int> dailyTemperatures(vector<int>& temperatures) {
+    stack<int> st;
+    vector<int> ans(temperatures.size(),0);
+    for(int i = 0;i < temperatures.size();i ++){
+    while(!st.empty()&&temperatures[st.top()]<temperatures[i]){
+        ans[st.top()] = i - st.top();
+        st.pop();
+    	}
+       st.push(i);
+    }
+    return ans;
+}
+```
+
+## 10.1 还接雨水吗？
+
+### 42.接雨水（单调栈解法）
+
+一段怎么都过不了的神秘代码
+
+```cpp
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        stack<int> st;
+        int sum = 0;
+        st.push(0);
+        for (int i = 0; i < height.size(); i++) {
+            if (height[i] < height[st.top()])
+                st.push(i);
+            else if (height[i] == height[st.top()]) {
+                st.pop();
+                st.push(i);
+            } else {
+                while (!st.empty() && height[i] > height[st.top()]) {
+                    int mid = height[st.top()];
+                    st.pop();
+                    if (!st.empty()) {
+                        int h = min(height[st.top()], height[i]) - mid;
+                        int w = i - st.top() - 1; // 这里应该是用下标直接算
+                        sum += h * w;
+                    }
+                }
+                st.push(i); // 这里没加，导致编译出错
+            }
+        }
+        return sum;
+    }
+};
+```
+
+### 53.最大子数组和(dp)
+
+```cpp
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int pre = 0 ,maxAns = nums[0];
+        for(int x:nums){
+            pre = max(pre+x,x);
+            maxAns = max(maxAns,pre);
+        }
+        return maxAns;
+        }
+    }
+};
+```
+
+### 560.和为k的子数组（暴力ac）
+
+```
+    int subarraySum(vector<int>& nums, int k) {
+        int sum = 0;
+        int ans = 0;
+        for(int i = 0;i < nums.size() ; i++){
+            sum += nums[i];
+            if(sum == k) ans++;
+            for(int j = i+1 ; j < nums.size() ; j++){
+                sum += nums[j];
+                if(sum == k) ans++;
+            }
+            sum = 0;
+        }
+        return ans;
+    }
+```
+
+## 10.2	滑动窗口 单调队列 贪心
+
+### 239.滑动窗口最大值（单调队列）
+
+```cpp
+class Solution {
+private:
+    class myQueue {
+    public:
+        deque<int> que;
+        void pop(int val) {
+            if (!que.empty() && que.front() == val) {
+                que.pop_front();
+            }
+        }
+        void push(int val) {
+            while (!que.empty()&&que.back() < val) {//为啥这里交换个顺序就能AC？
+                que.pop_back();
+            }
+            que.push_back(val);
+        }
+        int front() { return que.front(); }
+    };
+
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        myQueue que;
+        vector<int> ans;
+        for (int i = 0; i < k; i++) {
+            que.push(nums[i]);
+        }
+        ans.push_back(que.front());
+        for (int i = k; i < nums.size(); i++) {
+            que.pop(nums[i - k]);
+            que.push(nums[i]);
+            ans.push_back(que.front());
+        }
+        return ans;
+    }
+};
+```
+
+### 56.合并区间（贪心）
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> ans;
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b){return a[0] < b[0];});//这里是sort用法
+        ans.push_back(intervals[0]);
+        for(int i = 1 ; i < intervals.size() ; i ++)		{
+            if(intervals[i][0] <= ans.back()[1])
+            ans.back()[1] = max(ans.back()[1],intervals[i][1]);
+            else{
+                ans.push_back(intervals[i]);
+            }
+        }
+        return ans;
+        }
+    };
+
+```
+
+### 189.轮转数组
+
+```cpp
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        k %= nums.size();
+        reverse(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.begin()+k);
+        reverse(nums.begin()+k,nums.end());
+        }
+    };
+```
+
+## 10.3 滑动窗口
+
+### 3.无重复字符的最大字串
+
+```cpp
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int ans = 0;
+        unordered_set<char> occ;
+        int n = s.size();
+        int rk = -1;
+        for(int i  = 0 ; i < n ; i ++){
+            if(i != 0){
+                occ.erase(s[i-1]);
+            }
+            while(rk + 1 < n&& !occ.count(s[rk+1])){
+                occ.insert(s[rk+1]);
+                rk++;//又漏力
+            }
+            ans = max(ans,rk+1-i);
+        }
+        return ans;
+    }
+};
+```
+
+### 238.除自身以外数组的乘积
+
+```cpp
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n, 1);
+        // 计算左边元素的乘积
+        int left = 1;//注意不能写成int left，right = 1
+        for (int i = 0; i < n; i++) {
+            ans[i] *= left;
+            left *= nums[i];
+        }
+        // 计算右边元素的乘积并与左边元素的乘积相乘
+        int right = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            ans[i] *= right;
+            right *= nums[i];
+        }
+        return ans;
+    }
+};
+```
+
+## 10.5
+
+### 41.缺失的第一个正数
+
+解法一：哈希暴力，空间复杂度O（n）
+
+```cpp
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        unordered_map<int,int> hashtable;
+        int ans = 0;
+        for(int i = 0 ; i < nums.size() ; i++){
+            hashtable[nums[i]] = i;
+        }
+        //sort(nums.begin(),nums.end());
+        for(int i = 0 ; i < 2147483648 ; i++){
+            if(!hashtable.count(i+1)){
+                ans = i+1; 
+                break;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+解法二：置换法
+
+```cpp
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int ans = 0;
+        int i = 0;
+        if(nums.size()==1){ 
+            if(nums[0]<=0) return 1;
+                else if(nums[0] == 1) return 2;
+                    else return 1;
+        }
+        for(int i = 0 ; i < nums.size() ; i ++){
+            while(nums[i] >= 1 && nums[i] <= nums.size() && nums[nums[i]-1] != nums[i]) //注意用while而不是if
+                swap(nums[i],nums[nums[i]-1]);   
+        }
+        for(i  = 0 ; i  < nums.size() ; i++){
+            if(nums[i] != i+1){
+                return i+1;
+            } 
+        }
+        return nums.size()+1;
+    }
+};
+```
+
+### 438.找到字符串中所有的字母异位词（思考优化）
+
+滑动窗口
+
+```cpp
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ans;
+        int n = p.size();
+        int left = 0, right = n;
+        if(s.size() < p.size()) return ans;
+        vector<int> count(26);
+        vector<int> compareCount(26);
+        for(int i = 0 ; i < n ; i ++){
+            count[p[i]-'a'] ++;
+        }
+        for(int i = 0 ; i < n-1 ; i ++){//n-1注意
+            compareCount[s[i]-'a'] ++;
+        }
+        for(left = 0 , right = n-1 ; right<s.size() ; left++,right++){//n-1注意
+            compareCount[s[right] - 'a'] ++;
+            if(compareCount == count) 
+                ans.push_back(left);
+            compareCount[s[left] - 'a'] --;
+        }
+        return ans;
+    }
+};
+```
+
+## 10.6
+
+### ❤76.最小覆盖子串 hard
+
+```cpp
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char,int> hs,ht;
+        string ans;
+        for(int i = 0 ; i < t.size() ; i ++){
+            ht[t[i]] ++;
+        }
+        for(int i = 0, j = 0 , cnt = 0; i < s.size() ; i ++){
+            if(++hs[s[i]] <= ht[s[i]])
+                cnt ++;//有效计数 
+            while (hs[s[j]] > ht[s[j]]) hs[s[j++]] --;//左窗口移动
+            if (cnt == t.size()) {
+           		 if (ans.empty() || ans.size() > i-j+1)//这个条件确定了找到的ans是最小的{
+                    ans = s.substr(j, i - j +1 );
+                }
+            }
+        }
+        return ans;
+    }   
+};
+```
+
+### 73.矩阵置零
+
+解法一：暴力 空间复杂度O(mn)
+
+```cpp
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        vector<vector<int>> vec;
+        int row = 0 , col = 0;
+        for(int i = 0 ; i < matrix.size() ; i ++){
+            for(int j = 0 ; j < matrix[0].size() ; j ++){
+                if(matrix[i][j] == 0){
+                    vec.push_back({i,j});
+                }
+            }
+        }
+        for(int i = 0 ; i < vec.size() ; i ++){
+            row = vec[i][0];
+            col = vec[i][1];
+            for(int j = 0 ; j < matrix[0].size() ; j++)
+            matrix[row][j] = 0;
+            for(int k = 0; k < matrix.size() ; k++)
+            matrix[k][col] = 0;
+        }
+    }
+};
+```
+
+解法二：空间复杂度O(1)
+
+## 10.8
+
+### 54.螺旋矩阵
+
+```cpp
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int u = 0, d = matrix.size() - 1 , l = 0, r = matrix[0].size() - 1;
+        vector <int> ans;
+        if(matrix.empty()) return ans;
+        while(true){
+            for(int i = l ; i <= r ; ++i) ans.push_back(matrix[u][i]);
+            if(++u > d) break;
+            for(int i = u ; i <= d ; ++i) ans.push_back(matrix[i][r]);
+            if(--r < l) break;
+            for(int i = r ; i >= l ; --i) ans.push_back(matrix[d][i]);
+            if(--d < u) break;
+            for(int i = d ; i >= u ; --i) ans.push_back(matrix[i][l]);
+            if(++l > r) break;
+        }
+        return ans;
+    }
+};
+```
+
+### 48.旋转图像
+
+```cpp
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        for(int i = 0 ; i < matrix.size() / 2 ; ++i){
+            for(int j = 0 ; j < matrix[0].size() ; ++j){
+                swap(matrix[i][j],matrix[matrix[0].size()-i-1][j]);
+            }
+        }
+         for (int i = 0; i < matrix.size(); ++ i) {
+            for (int j = 0; j < i; ++ j) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+    }
+};
+```
+
+### 240.搜索二维矩阵II
+
+```cpp
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size() , n = matrix[0].size() ; 
+        int x = 0, y = n-1;
+        while(x < m && y >= 0) {
+            if(matrix[x][y] == target) 
+                return true;
+                else if(matrix[x][y] < target){
+                    x++;
+                }
+                    else{
+                        y--;      
+                    }
+        }
+        return false;
+    }
+};
+```
+
+### 136.只出现一次的数字
+
+解法一：哈希表
+
+```cpp
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        unordered_map<int,int> hashtable;
+        for(int i = 0 ; i < nums.size() ; ++ i ){
+            hashtable[nums[i]] ++;
+        }
+        for(auto it = hashtable.begin() ; it != hashtable.end() ; it ++){
+            if(it->second == 1) return it->first;
+        }
+        return false;
+    }
+};
+```
+
+it->first和it->second分别是啥？
+
+`it->first`和`it->second`的含义
+
+当使用迭代器（如这里的it）遍历unordered_map时：
+
+`it->first`：表示当前迭代器指向的键 - 值对中的键（`key`）。例如，在代码中的`unordered_map<int, int>`中，如果键是整数类型，`it->first`就代表这个整数键。
+
+`it->second`：表示当前迭代器指向的键 - 值对中的值（`value`）。对于`unordered_map<int, int>`，`it->second`就是与键相对应的整数值。在这段代码中，`hashtable[nums[i]]++`这一操作是在统计每个数字（键）在`nums`数组中出现的次数（值）。然后通过遍历`hashtable`，当找到`it->second`（即某个数字出现的次数）等于 1 时，就返回`it->first`（这个只出现一次的数字）。
+
+## 10.9
+
+### 160.相交链表
+
+```C++
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        auto p = headA;
+        auto q = headB;
+        auto ptr1 = headA;
+        auto ptr2 = headB;
+        int start = 0;
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        for(;p!= NULL;p=p->next) i++;
+        for(;q!= NULL;q=q->next) j++;
+        k = (i-j>0)? i-j:j-i;
+        if(i>j) 
+        for(;k>0;k--) ptr1 = ptr1->next;
+        else
+        for(;k>0;k--) ptr2 = ptr2->next;
+        for(;ptr1!=NULL;ptr1 = ptr1->next,ptr2 = ptr2->next)
+        if(ptr1 == ptr2) return ptr1;
+        return NULL;
+    }
+};
+```
+
+### 206.反转链表
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) { 
+        ListNode* p = nullptr;
+        ListNode* q = head;
+        while(q){
+            ListNode* o = q->next;
+            q->next = p;
+            p = q;
+            q = o;
+        }
+        head = p;
+        return head;
+    }
+};
+```
+
+### 141.环形链表
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == nullptr) return false;
+        ListNode *fast = head;
+        ListNode *slow = head;
+        while(fast->next!=nullptr&&fast->next->next!=nullptr){
+            fast = fast->next;
+            //if(fast == slow) return true;
+            fast = fast->next;
+            //if(fast == slow) return true;
+            slow = slow->next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+};
+```
+
+## 10.10
+
+### 142.环形链表II
+
+解法一：哈希集合
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        unordered_set<ListNode *> hashset;
+        while(head != nullptr){
+            if(hashset.count(head))
+            return head;
+        hashset.insert(head);
+        head = head->next;
+        }
+        return nullptr;
+    }
+};
+```
+
+解法二：快慢指针
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* fast = head;
+        ListNode* slow = head; 
+        while(fast!=nullptr&&fast->next!=nullptr){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(slow == fast){
+                ListNode* ptr = head;
+                while(ptr != slow){
+                    ptr=ptr->next;
+                    slow=slow->next;
+                }
+                return ptr;
+            }
+        }
+        return nullptr;
+    }
+};
+```
+
+### ♥234.回文链表
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *pre = nullptr;
+        ListNode *fast = head, *slow = head;
+        while (fast != nullptr && fast->next != nullptr) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        while (slow) {
+            ListNode * tmp = slow->next;
+            slow->next = pre;
+            pre = slow;
+            slow = tmp;
+        }
+        while (pre) {
+            if (pre->val != head->val) 
+                return false;
+            pre = pre->next;
+            head = head->next;
+        }
+        return true;
+    }
+};
+```
+
+### 21.合并两个有序链表
+
+解法一：递归
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode* l1 = list1;
+        ListNode* l2 = list2;
+        if(l1 == nullptr) return l2;
+        else if(l2 == nullptr) return l1;
+        else if(l1->val < l2->val) {
+            l1->next = mergeTwoLists(l1->next,l2);
+            return l1;
+        }
+        else {
+            l2->next = mergeTwoLists(l2->next,l1);
+            return l2;
+        }
+    }
+};
+```
+
+### 19.删除倒数第N个节点
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead->next = head;
+        ListNode* fast = dummyHead;
+        ListNode* slow = dummyHead;
+        for(int k = n ; k > 0 ; k --){
+            fast = fast->next;
+        }
+        fast = fast->next;
+        while(fast){
+            fast = fast->next;
+            slow = slow->next;
+        }
+        slow->next = slow->next->next;
+        return dummyHead->next;
+    }
+};
+```
+
+## 10.11
+
+### 两两交换链表中的结点
+
+注意画图分析
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode *dummyHead = new ListNode(0);
+        dummyHead->next = head;
+        ListNode *cur = dummyHead;
+        while(cur->next != nullptr && cur->next->next != nullptr){
+            ListNode *tmp1 = cur->next;
+            ListNode *tmp2 = cur->next->next->next;
+
+            cur->next = tmp1->next;//步骤一
+            cur->next->next = tmp1;//步骤二
+            tmp1->next = tmp2;     //步骤三
+
+            cur  = cur->next->next;
+        }
+        ListNode* result = dummyHead->next;
+        delete dummyHead;
+        return result;
+    }
+};
+```
+
+## 10.13
+
+### 25.k个一组重排链表
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *dummyHead = new ListNode(0);
+        dummyHead->next = head;
+
+        ListNode *pre = dummyHead;
+        ListNode *end = dummyHead;
+
+        while(end->next != nullptr){
+            for(int i = 0 ; i < k && end != nullptr ; i++) 
+                end = end->next;
+            if (end == nullptr) break;
+            ListNode *start = pre->next;
+            ListNode *next = end->next;
+            end->next = nullptr;
+            pre->next = reverse(start);
+            start->next = next;
+            pre = start;
+            end = pre;
+        } 
+        return dummyHead->next;
+    }
+    private: 
+        ListNode *reverse(ListNode* head){
+            ListNode *pre = nullptr;
+            ListNode *cur = head;
+            while(cur != nullptr){
+                ListNode *next = cur->next;
+                cur->next = pre;
+                pre = cur;
+                cur = next;
+        }
+        return pre;
+    } 
+};
+```
+
+### 138.随机链表的复制
+
+```cpp
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        unordered_map< Node*, Node*> map;
+        if(head == nullptr) return nullptr;
+        Node* newHead = new Node(head->val);
+        map[head] = newHead;
+        Node* tmp = head->next;
+        while(tmp != nullptr){
+            map[tmp] = new Node(tmp->val); 
+            tmp = tmp->next;
+        } 
+        tmp = head;
+        while(tmp != nullptr){
+            map[tmp]->next = map[tmp->next];
+            map[tmp]->random = map[tmp->random];
+            tmp = tmp->next;
+        }
+        return map[head];
+    }
+};
+```
+
