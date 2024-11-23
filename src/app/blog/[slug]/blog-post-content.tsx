@@ -42,22 +42,27 @@ export default function BlogPostContent({ post }: { post: Post }) {
     }
 
     // Configure marked to add IDs to headings
+
+
     marked.use({
       renderer: {
-        heading(text, level) {
-          const slug = text.toLowerCase().replace(/[^\w]+/g, '-')
-          return `<h${level} id="${slug}">${text}</h${level}>`
+        heading({ text, depth }) {
+          // 生成基础 slug，并清理多余连字符
+          const baseSlug = text.toLowerCase().replace(/[^\w]+/g, '-').replace(/-+/g, '-');
+          // 使用 depth 来确保 slug 唯一
+          const uniqueSlug = `${baseSlug}-${depth}`;
+          return `<h${depth} id="${uniqueSlug}">${text}</h${depth}>`;
         }
       }
-    })
-
+    });
+    
     // Render Markdown content
     const rendered = marked(post.source)
-    setRenderedContent(rendered)
+    setRenderedContent(rendered as string)
 
     // Extract headings from rendered HTML
     const parser = new DOMParser()
-    const doc = parser.parseFromString(rendered, 'text/html')
+    const doc = parser.parseFromString(rendered as string, 'text/html')
     const headingElements = doc.querySelectorAll('h1, h2, h3')
     const extractedHeadings: Heading[] = []
     const headingStack: Heading[] = []
@@ -142,8 +147,8 @@ export default function BlogPostContent({ post }: { post: Post }) {
 
   const renderHeadings = (headings: Heading[], level: number = 0) => (
     <ul className={`space-y-1 text-sm ${level > 0 ? 'ml-4' : ''}`}>
-      {headings.map((heading) => (
-        <li key={heading.id}>
+      {headings.map((heading,index) => (
+        <li key={index}>
           <div className="flex items-center">
             {heading.subheadings.length > 0 && (
               <button
@@ -176,7 +181,7 @@ export default function BlogPostContent({ post }: { post: Post }) {
   )
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
+    <div className="w-max h-max mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
       <script
         type="application/ld+json"
         suppressHydrationWarning
