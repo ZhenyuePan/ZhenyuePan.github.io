@@ -3,18 +3,6 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import BlogPostContent from "./blog-post-content"
 
-// Define the Post type to match what BlogPostContent expects
-type Post = {
-  slug: string;
-  source: string;
-  metadata: {
-    title: string;
-    publishedAt: string;
-    summary: string;
-    image?: string;
-  };
-}
-
 export async function generateStaticParams() {
   const posts = await getBlogPosts()
   return posts.map((post) => ({ slug: post.slug }))
@@ -23,10 +11,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }): Promise<Metadata | undefined> {
-  const resolvedParams = await params
-  const post = await getPost(resolvedParams.slug)
+  const post = await getPost(params.slug)
 
   if (!post) {
     return
@@ -54,26 +41,14 @@ export async function generateMetadata({
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }) {
-  const resolvedParams = await params
-  const rawPost = await getPost(resolvedParams.slug)
+  const post = await getPost(params.slug)
 
-  if (!rawPost) {
+  if (!post) {
     notFound()
-  }
-
-  // Ensure the post object matches the Post type
-  const post: Post = {
-    slug: rawPost.slug,
-    source: rawPost.source,
-    metadata: {
-      title: rawPost.metadata.title || '',
-      publishedAt: rawPost.metadata.publishedAt || '',
-      summary: rawPost.metadata.summary || '',
-      image: rawPost.metadata.image,
-    }
   }
 
   return <BlogPostContent post={post} />
 }
+

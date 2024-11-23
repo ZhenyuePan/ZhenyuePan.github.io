@@ -1,73 +1,52 @@
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeStringify from "rehype-stringify";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { unified } from "unified";
+import { markdownToHTML } from "../lib/mdx";
 
-function getMDXFiles(dir: string) {
+interface PostMetadata {
+  title: string;
+  publishedAt: string;
+  summary: string;
+  image?: string;
+}
+
+interface Post {
+  slug: string;
+  source: string;
+  metadata: PostMetadata;
+}
+
+function getMDXFiles(dir: string): string[] {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
 
-export async function markdownToHTML(markdown: string) {
-  const p = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypePrettyCode, {
-      theme: "github-light",
-      onVisitLine(node) {
-        // Prevent lines from collapsing in `display: grid` mode, and
-        // allow empty lines to be copy/pasted
-        if (node.children.length === 0) {
-          node.children = [{ type: "text", value: " " }];
-        }
-      },
-      onVisitHighlightedLine(node) {
-        node.properties.className.push("highlighted");
-      },
-      onVisitHighlightedWord(node) {
-        node.properties.className = ["word"];
-      },
-    })
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
-    .use(rehypeStringify)
-    .process(markdown);
-
-  return p.toString();
-}
-
-export async function getPost(slug: string) {
-  const filePath = path.join("content", `${slug}.mdx`);
+export async function getPost(slug: string): Promise<Post | undefined> {
+  const filePath = path.join(process.cwd(), "content", `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) {
+    return undefined;
+  }
   const source = fs.readFileSync(filePath, "utf-8");
   const { content: rawContent, data: metadata } = matter(source);
   const content = await markdownToHTML(rawContent);
   return {
-    source: content,
-    metadata,
     slug,
+    source: content,
+    metadata: metadata as PostMetadata,
   };
 }
 
-async function getAllPosts(dir: string) {
+async function getAllPosts(dir: string): Promise<Post[]> {
   const mdxFiles = getMDXFiles(dir);
-  return Promise.all(
+  const posts = await Promise.all(
     mdxFiles.map(async (file) => {
       const slug = path.basename(file, path.extname(file));
-      const { metadata, source } = await getPost(slug);
-      return {
-        metadata,
-        slug,
-        source,
-      };
+      const post = await getPost(slug);
+      return post as Post;
     })
   );
+  return posts.filter((post): post is Post => post !== undefined);
 }
 
-export async function getBlogPosts() {
+export async function getBlogPosts(): Promise<Post[]> {
   return getAllPosts(path.join(process.cwd(), "content"));
 }
