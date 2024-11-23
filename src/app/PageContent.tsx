@@ -34,6 +34,7 @@ export default function PageContent() {
       setIsVideo1Ended(true)
       video2.play().catch(error => console.error("Error playing video 2:", error))
     }
+    video1.addEventListener('ended', handleVideo1End)
 
     if (skipIntro) {
       startVideo1()
@@ -46,7 +47,6 @@ export default function PageContent() {
       return () => downwave.removeEventListener('animationend', handleAnimationEnd)
     }
 
-    video1.addEventListener('ended', handleVideo1End)
     return () => video1.removeEventListener('ended', handleVideo1End)
   }, [skipIntro])
 
