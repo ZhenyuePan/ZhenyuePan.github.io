@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Github } from 'lucide-react'
+import { Github, Mail, Youtube } from 'lucide-react'
 import Navbar from '@/components/navbar'
 
 export default function About() {
@@ -38,9 +38,9 @@ export default function About() {
               <h2 className="text-2xl font-semibold mt-6 mb-2">Skills</h2>
               <ul className="list-disc list-inside space-y-1">
                 <li>C++</li>
-                <li>Skill 2</li>
-                <li>Skill 3</li>
-                <li>Skill 4</li>
+                <li>linux</li>
+                <li>react</li>
+                <li>golang</li>
               </ul>
               
               <h2 className="text-2xl font-semibold mt-6 mb-2">Contact Me</h2>
@@ -50,8 +50,12 @@ export default function About() {
                     <Github className="h-5 w-5" />
                   </a>
                 </Button>
+                <Button variant="outline" size="icon">
+                  <a href="https://space.bilibili.com/14904497?spm_id_from=333.788.0.0" target="_blank" rel="noopener noreferrer" aria-label="mail">
+                    <Youtube className="h-5 w-5" />
+                  </a>
+                </Button>
               </div>
-              <p>or mail 664945264@qq.com</p>
             </div>
           </CardContent>
       </Card>
