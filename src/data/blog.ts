@@ -8,12 +8,14 @@ interface PostMetadata {
   publishedAt: string;
   summary: string;
   image?: string;
+  tags: string;
 }
 
 interface Post {
   slug: string;
   source: string;
   metadata: PostMetadata;
+  content: string;
 }
 
 function getMDXFiles(dir: string): string[] {
@@ -32,6 +34,7 @@ export async function getPost(slug: string): Promise<Post | undefined> {
     slug,
     source: content,
     metadata: metadata as PostMetadata,
+    content: content,
   };
 }
 

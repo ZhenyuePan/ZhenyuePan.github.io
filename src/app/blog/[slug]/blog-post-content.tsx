@@ -18,7 +18,11 @@ interface PostMetadata {
 interface Post {
   slug: string
   metadata: PostMetadata
-  source: string
+  content: string
+}
+
+interface BlogPostContentProps {
+  post: Post
 }
 
 interface Heading {
@@ -28,7 +32,7 @@ interface Heading {
   subheadings: Heading[]
 }
 
-export default function BlogPostContent({ post }: { post: Post }) {
+export default function BlogPostContent({ post }: BlogPostContentProps) {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState("")
   const [expandedHeadings, setExpandedHeadings] = useState<Set<string>>(new Set())
@@ -36,31 +40,24 @@ export default function BlogPostContent({ post }: { post: Post }) {
   const [renderedContent, setRenderedContent] = useState("")
 
   useEffect(() => {
-    if (!post.source) {
-      console.error("Post source is undefined")
+    if (!post.content) {
+      console.error("Post content is undefined")
       return
     }
-
-    // Configure marked to add IDs to headings
-
 
     marked.use({
       renderer: {
         heading({ text, depth }) {
-          // 生成基础 slug，并清理多余连字符
           const baseSlug = text.toLowerCase().replace(/[^\w]+/g, '-').replace(/-+/g, '-');
-          // 使用 depth 来确保 slug 唯一
           const uniqueSlug = `${baseSlug}-${depth}`;
           return `<h${depth} id="${uniqueSlug}">${text}</h${depth}>`;
         }
       }
     });
     
-    // Render Markdown content
-    const rendered = marked(post.source)
+    const rendered = marked(post.content)
     setRenderedContent(rendered as string)
 
-    // Extract headings from rendered HTML
     const parser = new DOMParser()
     const doc = parser.parseFromString(rendered as string, 'text/html')
     const headingElements = doc.querySelectorAll('h1, h2, h3')
@@ -89,7 +86,7 @@ export default function BlogPostContent({ post }: { post: Post }) {
     })
 
     setHeadings(extractedHeadings)
-  }, [post.source])
+  }, [post.content])
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -147,7 +144,7 @@ export default function BlogPostContent({ post }: { post: Post }) {
 
   const renderHeadings = (headings: Heading[], level: number = 0) => (
     <ul className={`space-y-1 text-sm ${level > 0 ? 'ml-4' : ''}`}>
-      {headings.map((heading,index) => (
+      {headings.map((heading, index) => (
         <li key={index}>
           <div className="flex items-center">
             {heading.subheadings.length > 0 && (
@@ -260,5 +257,4 @@ export default function BlogPostContent({ post }: { post: Post }) {
     </div>
   )
 }
-
 
