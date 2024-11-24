@@ -55,7 +55,7 @@ export default function Navbar() {
               className={`inline-flex items-center justify-center p-2 rounded-md transition-colors duration-300 ${
                 isScrolled
                   ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'
-                  : 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-20'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'
               } focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500`}
             >
               <span className="sr-only">打开主菜单</span>
