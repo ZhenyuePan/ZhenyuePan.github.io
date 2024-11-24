@@ -132,50 +132,64 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
 
   const toggleExpanded = (headingId: string) => {
     setExpandedHeadings((prev) => {
-      const newSet = new Set(prev)
+      const newSet = new Set(prev);
       if (newSet.has(headingId)) {
-        newSet.delete(headingId)
+        newSet.delete(headingId);
       } else {
-        newSet.add(headingId)
+        newSet.add(headingId);
       }
-      return newSet
-    })
-  }
-
+      return newSet;
+    });
+  };
+  
   const renderHeadings = (headings: Heading[], level: number = 0) => (
-    <ul className={`space-y-1 text-sm ${level > 0 ? 'ml-4' : ''}`}>
+    <ul
+      className={`space-y-1 text-sm ${
+        level > 0 ? `ml-${level * 4} border-l border-gray-300 dark:border-gray-700 pl-4` : ""
+      }`}
+    >
       {headings.map((heading, index) => (
         <li key={index}>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2 group">
             {heading.subheadings.length > 0 && (
               <button
-                onClick={() => toggleExpanded(heading.id)}
-                className="mr-1 p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-                aria-label={expandedHeadings.has(heading.id) ? "Collapse section" : "Expand section"}
+                onClick={(e) => {
+                  e.stopPropagation(); // 防止影响其他子标题
+                  toggleExpanded(heading.id);
+                }}
+                className={`p-1 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-200`}
+                aria-label={
+                  expandedHeadings.has(heading.id) ? "Collapse section" : "Expand section"
+                }
               >
                 {expandedHeadings.has(heading.id) ? (
-                  <ChevronUp className="w-3 h-3" />
+                  <ChevronUp className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                 ) : (
-                  <ChevronDown className="w-3 h-3" />
+                  <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                 )}
               </button>
             )}
             <button
               onClick={() => scrollToHeading(heading.id)}
-              className={`flex-grow text-left py-1 px-2 rounded transition-colors duration-200 ${
+              className={`flex-grow text-left py-1 px-2 rounded-md transition-colors duration-200 ${
                 activeHeading === heading.id
-                  ? 'bg-gray-100 text-gray-900 font-bold dark:bg-gray-800 dark:text-gray-100'
-                  : 'hover:bg-gray-50 text-gray-600 dark:hover:bg-gray-700 dark:text-gray-300'
+                  ? "bg-white hover:bg-gray-100 text-gray-900 font-bold dark:bg-gray-700 dark:text-gray-100"
+                  : "hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-600 dark:text-gray-300"
               }`}
             >
               {heading.text}
             </button>
           </div>
-          {expandedHeadings.has(heading.id) && heading.subheadings.length > 0 && renderHeadings(heading.subheadings, level + 1)}
+          {expandedHeadings.has(heading.id) && heading.subheadings.length > 0 && (
+            <div className="pl-4 mt-1 border-l border-gray-300 dark:border-gray-700">
+              {renderHeadings(heading.subheadings, level + 1)}
+            </div>
+          )}
         </li>
       ))}
     </ul>
-  )
+  );
+  
 
   return (
     <div className="w-max h-max mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
@@ -209,7 +223,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         </Link>
       </nav>
       
-      <header className="mb-12 text-center">
+      <header className="mb-12">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-3">{post.metadata.title}</h1>
         <Suspense fallback={<p className="h-5" />}>
           <p className="text-base text-gray-500 dark:text-gray-400">
@@ -221,7 +235,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className="lg:w-64 flex-shrink-0 order-2 lg:order-1">
           <nav className="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-4" aria-label="Table of contents">
-            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-gray-100">Contents</h2>
+            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-gray-100">navigate</h2>
             {headings.length > 0 ? (
               renderHeadings(headings)
             ) : (
