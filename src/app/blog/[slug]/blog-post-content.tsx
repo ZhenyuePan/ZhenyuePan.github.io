@@ -124,10 +124,27 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
   const scrollToHeading = useCallback((headingId: string) => {
     const element = document.getElementById(headingId)
     if (element) {
-      const yOffset = -80 // Adjust this value based on your layout
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
+      // Prevent default behavior
+      event?.preventDefault()
+      
+      // Calculate offset considering fixed header
+      const headerHeight = 80 // Adjust this value based on your header height
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+
+      // Smooth scroll to the element
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      
+      // Update active heading
       setActiveHeading(headingId)
+      
+      // If on mobile, close any expanded sections
+      if (window.innerWidth < 1024) {
+        setExpandedHeading(null)
+      }
     }
   }, [])
 
@@ -136,7 +153,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
   }, [])
 
   const renderHeadings = useCallback((headings: Heading[], level: number = 0): JSX.Element => (
-    <ul className={`space-y-1 text-sm ${level > 0 ? `ml-${level * 4} border-l border-gray-300 dark:border-gray-700 pl-4` : ""}`}>
+    <ul className={`space-y-1 text-sm ${level > 0 ? 'ml-4 border-l border-gray-300 dark:border-gray-700 pl-4' : ''}`}>
       {headings.map((heading, index) => (
         <li key={`${heading.id}-${level}-${index}`}>
           <div className="flex items-center gap-2 group">
@@ -146,29 +163,39 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
                   e.stopPropagation()
                   toggleExpanded(heading.id)
                 }}
-                className="p-1 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-200"
+                className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
                 aria-label={expandedHeading === heading.id ? "Collapse section" : "Expand section"}
               >
                 {expandedHeading === heading.id ? (
-                  <ChevronUp className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                  <ChevronUp className="w-4 h-4" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                  <ChevronDown className="w-4 h-4" />
                 )}
               </button>
             )}
-            <button
-              onClick={() => scrollToHeading(heading.id)}
-              className={`flex-grow text-left py-1 px-2 rounded-md transition-colors duration-200 ${
+            <a
+              href={`#${heading.id}`}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToHeading(heading.id)
+              }}
+              /**
+               * 控制滚动条的字体
+               * 
+               * 
+               * 
+               */
+              className={`flex-grow py-1 px-2 rounded-md transition-colors duration-200 ${
                 activeHeading === heading.id
-                  ? "bg-white hover:bg-gray-100 text-gray-900 font-bold dark:bg-gray-700 dark:text-gray-100"
-                  : "hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-600 dark:text-gray-300"
+                  ? "bg-auto hover:bg-gray-200 dark:bg-gray-800 text-primary font-medium"
+                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
             >
               {heading.text}
-            </button>
+            </a>
           </div>
           {expandedHeading === heading.id && heading.subheadings.length > 0 && (
-            <div className="pl-4 mt-1 border-l border-gray-300 dark:border-gray-700">
+            <div className="mt-1">
               {renderHeadings(heading.subheadings, level + 1)}
             </div>
           )}
@@ -176,7 +203,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       ))}
     </ul>
   ), [activeHeading, expandedHeading, scrollToHeading, toggleExpanded])
-
+  
   return (
     <div className="w-full max-w-screen-3xl px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
       <script
