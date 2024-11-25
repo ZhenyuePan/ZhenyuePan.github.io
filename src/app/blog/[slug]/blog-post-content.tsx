@@ -2,7 +2,7 @@
 import { Card } from "@/components/ui/card"
 import { DATA } from "@/data/resume"
 import { formatDate } from "@/lib/utils"
-import { Suspense, useEffect, useState, useRef } from "react"
+import { Suspense, useEffect, useState, useRef, useCallback } from "react"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -35,7 +35,7 @@ interface Heading {
 export default function BlogPostContent({ post }: BlogPostContentProps) {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState("")
-  const [expandedHeadings, setExpandedHeadings] = useState<Set<string>>(new Set())
+  const [expandedHeading, setExpandedHeading] = useState<string | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [renderedContent, setRenderedContent] = useState("")
 
@@ -47,19 +47,18 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
 
     marked.use({
       renderer: {
-        heading({ text, depth }) {
-          const baseSlug = text.toLowerCase().replace(/[^\w]+/g, '-').replace(/-+/g, '-');
-          const uniqueSlug = `${baseSlug}-${depth}`;
-          return `<h${depth} id="${uniqueSlug}">${text}</h${depth}>`;
+        heading(text, level) {
+          const id = text.toLowerCase().replace(/[^\w]+/g, '-')
+          return `<h${level} id="${id}">${text}</h${level}>`
         }
       }
-    });
+    })
     
     const rendered = marked(post.content)
-    setRenderedContent(rendered as string)
+    setRenderedContent(rendered)
 
     const parser = new DOMParser()
-    const doc = parser.parseFromString(rendered as string, 'text/html')
+    const doc = parser.parseFromString(rendered, 'text/html')
     const headingElements = doc.querySelectorAll('h1, h2, h3')
     const extractedHeadings: Heading[] = []
     const headingStack: Heading[] = []
@@ -122,53 +121,35 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     }
   }, [headings])
 
-  const scrollToHeading = (headingId: string) => {
+  const scrollToHeading = useCallback((headingId: string) => {
     const element = document.getElementById(headingId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const yOffset = -80 // Adjust this value based on your layout
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+      setActiveHeading(headingId)
     }
-    setActiveHeading(headingId)
-  }
+  }, [])
 
-  const toggleExpanded = (headingId: string) => {
-    setExpandedHeadings((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(headingId)) {
-        newSet.delete(headingId);
-      } else {
-        newSet.add(headingId);
-      }
-      return newSet;
-    });
-  };
-  /**
-   * 
-   * @param headings 
-   * @param level 
-   * @returns 
-   * 导航栏
-   */
-  const renderHeadings = (headings: Heading[], level: number = 0) => (
-    <ul
-      className={`space-y-1 text-sm ${
-        level > 0 ? `ml-${level * 4} border-l border-gray-300 dark:border-gray-700 pl-4` : ""
-      }`}
-    >
+  const toggleExpanded = useCallback((headingId: string) => {
+    setExpandedHeading(prev => prev === headingId ? null : headingId)
+  }, [])
+
+  const renderHeadings = useCallback((headings: Heading[], level: number = 0): JSX.Element => (
+    <ul className={`space-y-1 text-sm ${level > 0 ? `ml-${level * 4} border-l border-gray-300 dark:border-gray-700 pl-4` : ""}`}>
       {headings.map((heading, index) => (
-        <li key={index}>
+        <li key={`${heading.id}-${level}-${index}`}>
           <div className="flex items-center gap-2 group">
             {heading.subheadings.length > 0 && (
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // 防止影响其他子标题
-                  toggleExpanded(heading.id);
+                  e.stopPropagation()
+                  toggleExpanded(heading.id)
                 }}
-                className={`p-1 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-200`}
-                aria-label={
-                  expandedHeadings.has(heading.id) ? "Collapse section" : "Expand section"
-                }
+                className="p-1 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-200"
+                aria-label={expandedHeading === heading.id ? "Collapse section" : "Expand section"}
               >
-                {expandedHeadings.has(heading.id) ? (
+                {expandedHeading === heading.id ? (
                   <ChevronUp className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                 ) : (
                   <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-300" />
@@ -186,7 +167,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
               {heading.text}
             </button>
           </div>
-          {expandedHeadings.has(heading.id) && heading.subheadings.length > 0 && (
+          {expandedHeading === heading.id && heading.subheadings.length > 0 && (
             <div className="pl-4 mt-1 border-l border-gray-300 dark:border-gray-700">
               {renderHeadings(heading.subheadings, level + 1)}
             </div>
@@ -194,11 +175,10 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         </li>
       ))}
     </ul>
-  );
-  
+  ), [activeHeading, expandedHeading, scrollToHeading, toggleExpanded])
 
   return (
-    <div className=" w-full max-w-screen-3xl px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
+    <div className="w-full max-w-screen-3xl px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -241,7 +221,8 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className="lg:w-64 flex-shrink-0 order-1 lg:order-1">
           <nav className="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-4" aria-label="Table of contents">
-            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-gray-100">导航栏</h2>
+            <h2 className="text-base font-semibold mb-3 text-gray-900 
+dark:text-gray-100">导航栏</h2>
             {headings.length > 0 ? (
               renderHeadings(headings)
             ) : (
@@ -251,18 +232,18 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         </aside>
         
         <Card className="order-2 w-3/4 p-6 rounded-lg shadow-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <article className="flex-grow order-2 lg:order-2 prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none blog-content">
-          {renderedContent ? (
-            <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
-          ) : (
-            <Alert>
-              <AlertTitle>Content Unavailable</AlertTitle>
-              <AlertDescription>
-                The content for this blog post is currently unavailable. Please check back later.
-              </AlertDescription>
-            </Alert>
-          )}
-        </article>
+          <article className="flex-grow order-2 lg:order-2 prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none blog-content">
+            {renderedContent ? (
+              <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
+            ) : (
+              <Alert>
+                <AlertTitle>Content Unavailable</AlertTitle>
+                <AlertDescription>
+                  The content for this blog post is currently unavailable. Please check back later.
+                </AlertDescription>
+              </Alert>
+            )}
+          </article>
         </Card>
       </div>
       
@@ -279,4 +260,11 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     </div>
   )
 }
+
+
+
+
+
+
+
 
