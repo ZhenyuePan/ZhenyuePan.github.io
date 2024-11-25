@@ -47,7 +47,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
 
     marked.use({
       renderer: {
-        heading(text, level) {
+        heading(text: string, level: number) {
           const id = text.toLowerCase().replace(/[^\w]+/g, '-')
           return `<h${level} id="${id}">${text}</h${level}>`
         }
@@ -55,10 +55,10 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     })
     
     const rendered = marked(post.content)
-    setRenderedContent(rendered)
+    setRenderedContent(rendered as string)
 
     const parser = new DOMParser()
-    const doc = parser.parseFromString(rendered, 'text/html')
+    const doc = parser.parseFromString(rendered as string, 'text/html')
     const headingElements = doc.querySelectorAll('h1, h2, h3')
     const extractedHeadings: Heading[] = []
     const headingStack: Heading[] = []
@@ -248,8 +248,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className="lg:w-64 flex-shrink-0 order-1 lg:order-1">
           <nav className="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-4" aria-label="Table of contents">
-            <h2 className="text-base font-semibold mb-3 text-gray-900 
-dark:text-gray-100">导航栏</h2>
+            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-gray-100">导航栏</h2>
             {headings.length > 0 ? (
               renderHeadings(headings)
             ) : (
