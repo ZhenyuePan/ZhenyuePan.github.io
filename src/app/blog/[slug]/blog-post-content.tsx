@@ -8,34 +8,14 @@ import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { marked } from 'marked'
 
-interface PostMetadata {
-  title: string
-  publishedAt: string
-  summary: string
-  image?: string
-}
-
-interface Post {
-  slug: string
-  metadata: PostMetadata
-  content: string
-}
-
-interface BlogPostContentProps {
-  post: Post
-}
-
-interface Heading {
-  id: string
-  text: string
-  level: number
-  subheadings: Heading[]
-}
+// ... (previous interfaces remain unchanged)
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState("")
   const [expandedHeading, setExpandedHeading] = useState<string | null>(null)
+  const [isNavVisible, setIsNavVisible] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [renderedContent, setRenderedContent] = useState("")
 
@@ -45,15 +25,6 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       return
     }
 
-    marked.use({
-      renderer: {
-        heading(text: string, level: number) {
-          const id = text.toLowerCase().replace(/[^\w]+/g, '-')
-          return `<h${level} id="${id}">${text}</h${level}>`
-        }
-      }
-    })
-    
     const rendered = marked(post.content)
     setRenderedContent(rendered as string)
 
@@ -85,6 +56,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     })
 
     setHeadings(extractedHeadings)
+    console.log('Extracted headings:', extractedHeadings)
   }, [post.content])
 
   useEffect(() => {
@@ -92,6 +64,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            console.log('Intersecting heading:', entry.target.id)
             setActiveHeading(entry.target.id)
           }
         })
@@ -121,36 +94,40 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     }
   }, [headings])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.pageYOffset > 300)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const scrollToHeading = useCallback((headingId: string) => {
     const element = document.getElementById(headingId)
     if (element) {
-      // Prevent default behavior
-      event?.preventDefault()
-      
-      // Calculate offset considering fixed header
       const headerHeight = 80 // Adjust this value based on your header height
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - headerHeight
 
-      // Smooth scroll to the element
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
-      
-      // Update active heading
+
       setActiveHeading(headingId)
-      
+
       // If on mobile, close any expanded sections
       if (window.innerWidth < 1024) {
         setExpandedHeading(null)
+        setIsNavVisible(false)
       }
     }
-  }, [])
+  }, [setActiveHeading, setExpandedHeading])
 
-  const toggleExpanded = useCallback((headingId: string) => {
-    setExpandedHeading(prev => prev === headingId ? null : headingId)
-  }, [])
+  const toggleExpanded = (id: string) => {
+    setExpandedHeading((prev) => (prev === id ? null : id))
+  }
 
   const renderHeadings = useCallback((headings: Heading[], level: number = 0): JSX.Element => (
     <ul className={`space-y-1 text-sm ${level > 0 ? 'ml-4 border-l border-gray-300 dark:border-gray-700 pl-4' : ''}`}>
@@ -173,26 +150,16 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
                 )}
               </button>
             )}
-            <a
-              href={`#${heading.id}`}
-              onClick={(e) => {
-                e.preventDefault()
-                scrollToHeading(heading.id)
-              }}
-              /**
-               * 控制滚动条的字体
-               * 
-               * 
-               * 
-               */
-              className={`flex-grow py-1 px-2 rounded-md transition-colors duration-200 ${
+            <button
+              onClick={() => scrollToHeading(heading.id)}
+              className={`flex-grow py-1 px-2 rounded-md transition-colors duration-200 text-left ${
                 activeHeading === heading.id
-                  ? "bg-auto hover:bg-gray-200 dark:bg-gray-800 text-primary font-medium"
+                  ? "bg-gray-200 dark:bg-gray-800 text-primary font-medium"
                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
             >
               {heading.text}
-            </a>
+            </button>
           </div>
           {expandedHeading === heading.id && heading.subheadings.length > 0 && (
             <div className="mt-1">
@@ -203,7 +170,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       ))}
     </ul>
   ), [activeHeading, expandedHeading, scrollToHeading, toggleExpanded])
-  
+
   return (
     <div className="w-full max-w-screen-3xl px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm">
       <script
@@ -246,9 +213,15 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       </header>
       
       <div className="flex flex-col lg:flex-row gap-8">
-        <aside className="lg:w-64 flex-shrink-0 order-1 lg:order-1">
-          <nav className="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-4" aria-label="Table of contents">
-            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-gray-100">导航栏</h2>
+        <aside className={`lg:w-64 flex-shrink-0 order-1 lg:order-1 ${isNavVisible ? 'block' : 'hidden lg:block'}`}>
+          <button
+            className="lg:hidden mb-4 px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-md"
+            onClick={() => setIsNavVisible(!isNavVisible)}
+          >
+            {isNavVisible ? 'Hide' : 'Show'} Table of Contents
+          </button>
+          <nav className="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-4 bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md" aria-label="Table of contents">
+            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-gray-100">Table of Contents</h2>
             {headings.length > 0 ? (
               renderHeadings(headings)
             ) : (
@@ -257,7 +230,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           </nav>
         </aside>
         
-        <Card className="order-2 w-3/4 p-6 rounded-lg shadow-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <Card className="order-2 w-full lg:w-3/4 p-6 rounded-lg shadow-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
           <article className="flex-grow order-2 lg:order-2 prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none blog-content">
             {renderedContent ? (
               <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
@@ -283,14 +256,18 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           <ChevronRight className="w-4 h-4 ml-1" aria-hidden="true" />
         </Link>
       </nav>
+
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-8 right-8 bg-gray-200 dark:bg-gray-800 p-2 rounded-full shadow-md hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200"
+          aria-label="Scroll to top"
+        >
+          <ChevronUp className="w-6 h-6" />
+        </button>
+      )}
     </div>
   )
 }
-
-
-
-
-
-
 
 
