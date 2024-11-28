@@ -9,6 +9,30 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { marked } from 'marked'
 
 // ... (previous interfaces remain unchanged)
+interface PostMetadata {
+  title: string
+  publishedAt: string
+  summary: string
+  image?: string
+}
+
+interface Post {
+  slug: string
+  metadata: PostMetadata
+  content: string
+}
+
+interface BlogPostContentProps {
+  post: Post
+}
+
+interface Heading {
+  id: string
+  text: string
+  level: number
+  subheadings: Heading[]
+}
+
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
   const [headings, setHeadings] = useState<Heading[]>([])
