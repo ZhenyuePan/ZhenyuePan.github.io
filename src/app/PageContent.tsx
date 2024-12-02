@@ -135,9 +135,79 @@ export default function PageContent() {
             initial="hidden"
             animate="visible"
           >
-            {/* Blog content can be added here */}
-          </motion.div>
+        <div className="py-10 absolute top-[100%] left-0 w-full">
+          {/* Header */}
+          <header className="text-black">
+            <div className="container mx-auto text-center">
+              <h1 className="text-5xl font-bold">My Portfolio</h1>
+            </div>
+          </header>
+
+          {/* Main content */}
+          <main className="container mx-auto px-6 py-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {/* Blog Card 1 */}
+              <motion.div
+                className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300 hover:shadow-2xl transition-shadow duration-300"
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img className="w-full h-48 object-cover" src="/sakura/zhizhuzi.jpg" alt="Blog image" />
+                <div className="p-6">
+                  <h2 className="text-2xl font-semibold text-blue-800">建站日记</h2>
+                  <p className="mt-3 text-gray-600">如何用Next.js搭建属于自己的个人博客。</p>
+                  <button className="mt-4 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                    阅读更多
+                  </button>
+                </div>
+              </motion.div>
+
+              {/* Blog Card 2 */}
+              <motion.div
+                className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300 hover:shadow-2xl transition-shadow duration-300"
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img className="w-full h-48 object-cover" src="/sakura/myHeartDanger.jpg" alt="Blog image" />
+                <div className="p-6">
+                  <h2 className="text-2xl font-semibold text-blue-800">RoseDB</h2>
+                  <p className="mt-3 text-gray-600">一个轻量级的、基于bitcask的数据库内核</p>
+                  <button className="mt-4 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                    阅读更多
+                  </button>
+                </div>
+              </motion.div>
+
+              {/* Blog Card 3 */}
+              <motion.div
+                className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300 hover:shadow-2xl transition-shadow duration-300"
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img className="w-full h-48 object-cover" src="/sakura/littlePeach.jpg" alt="Blog image" />
+                <div className="p-6">
+                  <h2 className="text-2xl font-semibold text-blue-800">TinyWebserver</h2>
+                  <p className="mt-3 text-gray-600">阻尼效果和隐藏滑动栏。</p>
+                  <button className="mt-4 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                    阅读更多
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          </main>
+
+          {/* Footer */}
+          <footer className="bg-gray-200  py-6">
+            <div className="container mx-auto text-center">
+              <p>&copy; 2024 博客首页. 版权所有。</p>
+            </div>
+          </footer>
         </div>
+              </motion.div>
+            </div>
       )}
     </main>
   )
