@@ -6,8 +6,8 @@ import { MenuIcon, SearchIcon } from 'lucide-react'
 export default function BlogHeader() {
   return (
     <header className="container mx-auto px-4 py-16 text-center">
-      <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-400 animate-fade-in">
-        Digital Chronicles
+      <h1 className="py-3 text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-400 animate-fade-in">
+        Blog Zone
       </h1>
       <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-8 animate-slide-up">
         Venture into the digital realm where code meets creativity
