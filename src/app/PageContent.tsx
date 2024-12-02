@@ -127,8 +127,18 @@ export default function PageContent() {
       {showBlogContent && (
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
           <Navbar />
-          <header className="text-center mb-12">
+          <header className="absolute text-5xl text-white right-[20%]">todo list
+                <p>音乐播放器</p>
+                <p>live2d</p>
+                <p>动漫背景</p>
+                <p>评论/登录功能</p>
+                <p>建站日记</p>
+                <p>归档</p>
+                <p>博客搜索功能</p>
+                <p>完善文章页面</p>
           </header>
+          
+          
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={containerVariants}
@@ -162,7 +172,7 @@ export default function PageContent() {
               >
                 <img className="w-full h-48 object-cover" src="/sakura/zhizhuzi.jpg" alt="Blog image" />
                 <div className="p-6">
-                  <h2 className="text-2xl font-semibold text-blue-800">建站日记</h2>
+                  <h2 className="text-2xl font-semibold text-blue-800">建站指北</h2>
                   <p className="mt-3 text-gray-600">如何用Next.js搭建属于自己的个人博客。</p>
                   <button className="mt-4 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
                     阅读更多
