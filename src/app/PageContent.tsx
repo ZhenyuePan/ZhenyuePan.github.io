@@ -135,6 +135,13 @@ export default function PageContent() {
             initial="hidden"
             animate="visible"
           >
+                       
+
+
+        {/**section 2
+        
+        
+         */}
         <div className="py-10 absolute top-[100%] left-0 w-full h-full">
           {/* Header */}
           <header className="text-black">
