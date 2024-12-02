@@ -90,7 +90,7 @@ export default function Navbar() {
                   className={`block px-3 py-2 rounded-md text-base font-medium ${
                     isScrolled
                       ? 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
-                      : 'text-white hover:bg-white hover:bg-opacity-20 hover:text-blue-200'
+                      : 'text-gray-700 hover:bg-white hover:bg-opacity-20 hover:text-blue-200'
                   }`} 
                   onClick={() => setIsOpen(false)}
                 >
