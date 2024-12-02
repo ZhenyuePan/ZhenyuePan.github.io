@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/?skip_intro=true" className="flex-shrink-0">
-              <span className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-blue-600'}`}>Kafka&apos;s Blog</span>
+              <span className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-blue-600'}`}>卡夫卡的笔记本</span>
             </Link>
           </div>
           <div className="hidden md:block">

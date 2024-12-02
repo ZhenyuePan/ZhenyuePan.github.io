@@ -135,7 +135,7 @@ export default function PageContent() {
             initial="hidden"
             animate="visible"
           >
-        <div className="py-10 absolute top-[100%] left-0 w-full">
+        <div className="py-10 absolute top-[100%] left-0 w-full h-full">
           {/* Header */}
           <header className="text-black">
             <div className="container mx-auto text-center">
@@ -144,7 +144,7 @@ export default function PageContent() {
           </header>
 
           {/* Main content */}
-          <main className="container mx-auto px-6 py-12">
+          <main className="flex-grow container mx-auto py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
               {/* Blog Card 1 */}
               <motion.div
