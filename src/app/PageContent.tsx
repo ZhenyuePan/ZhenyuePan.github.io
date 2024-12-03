@@ -209,7 +209,8 @@ export default function PageContent() {
           {/* Footer */}
           <footer className="bg-gray-200  py-6">
             <div className="container mx-auto text-center">
-              <p>&copy; 2024 博客首页. 版权所有。</p>
+              <p>&copy; 2024 卡夫卡的笔记本 版权所有。</p>
+              <p>powered by 我自己</p>
             </div>
           </footer>
         </div>
