@@ -142,7 +142,7 @@ export default function PageContent() {
         
         
          */}
-        <div className="py-10 absolute top-[100%] left-0 w-full h-full">
+        <div className="grid grid-rows-[1fr,auto] absolute top-[100%] left-0 w-full h-full" >
           {/* Header */}
           <header className="text-black">
             <div className="container mx-auto text-center">
@@ -152,7 +152,7 @@ export default function PageContent() {
 
           {/* Main content */}
           <main className="container mx-auto py-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
               {/* Blog Card 1 */}
               <motion.div
                 className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300 hover:shadow-2xl transition-shadow duration-300"
@@ -197,7 +197,7 @@ export default function PageContent() {
                 <img className="w-full h-48 object-cover" src="/sakura/littlePeach.jpg" alt="Blog image" />
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold text-blue-800">TinyWebserver</h2>
-                  <p className="mt-3 text-gray-600">阻尼效果和隐藏滑动栏。</p>
+                  <p className="mt-3 text-gray-600">麻雀虽小，五脏俱全。</p>
                   <button className="mt-4 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
                     阅读更多
                   </button>
@@ -206,7 +206,7 @@ export default function PageContent() {
             </div>
           </main>
 
-          {/* Footer */}
+          {/* Footer 强行拉伸过*/}
           <footer className="bg-gray-200  py-6">
             <div className="container mx-auto text-center">
               <p>&copy; 2024 卡夫卡的笔记本 版权所有。</p>

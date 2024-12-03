@@ -1,9 +1,10 @@
 'use client';
 
-import { useOptimistic, useTransition, useState, useEffect } from 'react';
+import { useTransition, useState, useEffect } from 'react';
 import { toggleTodo, deleteTodo } from './actions';
 
 type Todo = {
+  id: number;
   todos: string;
   created_at: string;
   task: string;
