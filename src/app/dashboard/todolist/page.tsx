@@ -11,7 +11,6 @@ export default async function TodoPage() {
     <div className="max-w-4xl absolute left-[30%] w-[50%]  ">
       <h1 className="text-2xl font-bold mb-4">Todo List</h1>
       <TodoForm />
-      <TodoList initialTodos={todos} />
     </div>
   );
 }
