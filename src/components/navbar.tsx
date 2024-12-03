@@ -26,7 +26,7 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-300 ${isScrolled ? 'bg-white bg-opacity-80 shadow-md' : 'bg-white bg-opacity-80 shadow-md'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-300 ${isScrolled ? 'bg-white bg-opacity-80 shadow-md' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -91,7 +91,7 @@ export default function Navbar() {
                   className={`block px-3 py-2 rounded-md text-base font-medium ${
                     isScrolled
                       ? 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
-                      : 'text-gray-700 hover:bg-white hover:bg-opacity-20 hover:text-blue-200'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
                   }`} 
                   onClick={() => setIsOpen(false)}
                 >

@@ -127,16 +127,6 @@ export default function PageContent() {
       {showBlogContent && (
         <div className="container mx-auto px-4 py-8 animate-[in_1.5s_forwards]">
           <Navbar />
-          <header className="absolute text-5xl text-white right-[20%]">todo list
-                <p>音乐播放器</p>
-                <p>live2d</p>
-                <p>动漫背景</p>
-                <p>评论/登录功能</p>
-                <p>建站日记</p>
-                <p>归档</p>
-                <p>博客搜索功能</p>
-                <p>完善文章页面</p>
-          </header>
           
           
           <motion.div 
@@ -161,7 +151,7 @@ export default function PageContent() {
           </header>
 
           {/* Main content */}
-          <main className="flex-grow container mx-auto py-12">
+          <main className="container mx-auto py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
               {/* Blog Card 1 */}
               <motion.div
@@ -223,8 +213,8 @@ export default function PageContent() {
             </div>
           </footer>
         </div>
-              </motion.div>
-            </div>
+        </motion.div>
+      </div>
       )}
     </main>
   )
