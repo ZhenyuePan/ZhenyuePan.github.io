@@ -160,7 +160,7 @@ export default function PageContent() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <img className="w-full h-48 object-cover" src="/sakura/zhizhuzi.jpg" alt="Blog image" />
+                <Image className="w-full h-48 object-cover" src="/sakura/zhizhuzi.jpg" alt="Blog image" />
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold text-blue-800">建站指北</h2>
                   <p className="mt-3 text-gray-600">如何用Next.js搭建属于自己的个人博客。</p>
@@ -177,7 +177,7 @@ export default function PageContent() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <img className="w-full h-48 object-cover" src="/sakura/myHeartDanger.jpg" alt="Blog image" />
+                <Image className="w-full h-48 object-cover" src="/sakura/myHeartDanger.jpg" alt="Blog image" />
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold text-blue-800">RoseDB</h2>
                   <p className="mt-3 text-gray-600">一个轻量级的、基于bitcask的数据库内核</p>
@@ -194,7 +194,7 @@ export default function PageContent() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <img className="w-full h-48 object-cover" src="/sakura/littlePeach.jpg" alt="Blog image" />
+                <Image className="w-full h-48 object-cover" src="/sakura/littlePeach.jpg" alt="Blog image" />
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold text-blue-800">TinyWebserver</h2>
                   <p className="mt-3 text-gray-600">麻雀虽小，五脏俱全。</p>
