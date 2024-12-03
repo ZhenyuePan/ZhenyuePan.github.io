@@ -142,7 +142,7 @@ export default function PageContent() {
         
         
          */}
-        <div className="grid grid-rows-[1fr,auto] absolute top-[100%] left-0 w-full h-full" >
+        <div className="absolute py-6 top-[100%] left-0 w-full h-full" >
           {/* Header */}
           <header className="text-black">
             <div className="container mx-auto text-center">
@@ -206,7 +206,7 @@ export default function PageContent() {
             </div>
           </main>
 
-          {/* Footer 强行拉伸过*/}
+          {/* Footer */}
           <footer className="bg-gray-200  py-6">
             <div className="container mx-auto text-center">
               <p>&copy; 2024 卡夫卡的笔记本 版权所有。</p>
@@ -215,8 +215,12 @@ export default function PageContent() {
           </footer>
         </div>
         </motion.div>
+        
       </div>
-      )}
+
+      )
+    }
+      
     </main>
   )
 }
