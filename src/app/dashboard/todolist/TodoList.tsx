@@ -32,9 +32,9 @@ export default function TodoList({ initialTodos }: { initialTodos: Todo[] }) {
 
   return (
     <div >
-      <ul className="space-y-2">
+      <ul className="space-y-2 text-sm">
         {todos.map((todo) => (
-          <li key={todo.todos} className="flex items-center justify-between bg-white p-4 rounded-md shadow">
+          <li key={todo.todos} className="flex items-center justify-between bg-white p-2 rounded-md shadow">
             <div className="flex items-center">
               <input
                 type="checkbox"
@@ -53,7 +53,7 @@ export default function TodoList({ initialTodos }: { initialTodos: Todo[] }) {
                     }
                   });
                 }}
-                className="mr-2 h-5 w-5 text-blue-500"
+                className="mr-2 h-3 w-5 text-blue-500"
               />
               <span className={todo.completed ? 'line-through text-gray-500' : ''}>{todo.todos}</span>
             </div>

@@ -11,7 +11,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link href="/" className="text-blue-600 hover:underline">Home</Link>
             </li>
             <li>
-              <Link href="/comments" className="text-blue-600 hover:underline">Comments</Link>
+              <Link href="/dashboard/comment" className="text-blue-600 hover:underline">Comment</Link>
+            </li>
+            <li>
+              <Link href="/dashboard/todolist" className="text-blue-600 hover:underline">todolist</Link>
             </li>
             {/* Add more navigation links as needed */}
           </ul>
