@@ -295,7 +295,7 @@ function BlogCard({ imageSrc, title, description }: BlogCardProps) {
         <h2 className="text-xl font-semibold text-blue-800 mb-2">{title}</h2>
         <p className="text-gray-600 mb-4">{description}</p>
         <button className="w-full bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-          阅读更多
+          了解更多
         </button>
       </div>
     </motion.div>
