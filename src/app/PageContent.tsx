@@ -27,15 +27,7 @@ export default function PageContent() {
 
     if (!video1 || !video2) return
 
-    const handleScrollDown = () => {
-      if (scrollContainerRef.current && currentSection < 2) {
-        setCurrentSection(prevSection => prevSection + 1)
-        scrollContainerRef.current.scrollTo({
-          top: window.innerHeight * (currentSection + 1),
-          behavior: 'smooth'
-        })
-      }
-    }
+
     const startVideo1 = () => {
       setIsAnimationEnded(true)
       video1.play().catch(error => console.error("Error playing video 1:", error))
@@ -72,7 +64,6 @@ export default function PageContent() {
 
       const delta = event.deltaY
       const scrollAmount = window.innerHeight
-      const maxScroll = container.scrollHeight - container.clientHeight
 
       if (delta > 0 && currentSection < 2) {
         // Scrolling down
