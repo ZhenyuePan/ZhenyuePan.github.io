@@ -237,17 +237,17 @@ export default function PageContent() {
                     <BlogCard
                       imageSrc="/sakura/zhizhuzi.jpg"
                       title="建站指北"
-                      description="如何用Next.js搭建属于自己的个人博客。"
+                      description="用Next.js搭建属于自己的个人博客"
                     />
                     <BlogCard
                       imageSrc="/sakura/myHeartDanger.jpg"
                       title="RoseDB"
-                      description="一个轻量级的、基于bitcask的数据库内核"
+                      description="一个轻量级的KV数据库"
                     />
                     <BlogCard
                       imageSrc="/sakura/littlePeach.jpg"
                       title="TinyWebserver"
-                      description="麻雀虽小，五脏俱全。"
+                      description="Linux网络编程入门级项目"
                     />
                   </motion.div>
                 </div>
@@ -280,8 +280,9 @@ function BlogCard({ imageSrc, title, description }: BlogCardProps) {
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
+      
     >
-      <div className="relative h-48">
+      <div className="relative h-48 ">
         <Image
           className="object-cover"
           src={imageSrc}
