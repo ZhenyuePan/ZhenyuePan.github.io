@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import Navbar from '@/components/navbar'
-import { ScrollIndicator } from '@/components/scrollIndicator'
+import  ScrollIndicator from '@/components/ScrollIndicator'
+import { ContactForm } from '@/components/ContactForm'
 export default function PageContent() {
   const downwaveRef = useRef<HTMLDivElement>(null)
   const video1Ref = useRef<HTMLVideoElement>(null)
@@ -27,10 +28,10 @@ export default function PageContent() {
     if (!video1 || !video2) return
 
     const handleScrollDown = () => {
-      if (scrollContainerRef.current && currentSection < 1) {
-        setCurrentSection(1)
+      if (scrollContainerRef.current && currentSection < 2) {
+        setCurrentSection(prevSection => prevSection + 1)
         scrollContainerRef.current.scrollTo({
-          top: window.innerHeight,
+          top: window.innerHeight * (currentSection + 1),
           behavior: 'smooth'
         })
       }
@@ -73,18 +74,18 @@ export default function PageContent() {
       const scrollAmount = window.innerHeight
       const maxScroll = container.scrollHeight - container.clientHeight
 
-      if (delta > 0 && currentSection < 1) {
+      if (delta > 0 && currentSection < 2) {
         // Scrolling down
-        setCurrentSection(1)
+        setCurrentSection(prevSection => prevSection + 1)
         container.scrollTo({
-          top: scrollAmount,
+          top: scrollAmount * (currentSection + 1),
           behavior: 'smooth'
         })
       } else if (delta < 0 && currentSection > 0) {
         // Scrolling up
-        setCurrentSection(0)
+        setCurrentSection(prevSection => prevSection - 1)
         container.scrollTo({
-          top: 0,
+          top: scrollAmount * (currentSection - 1),
           behavior: 'smooth'
         })
       }
@@ -94,18 +95,18 @@ export default function PageContent() {
       const container = scrollContainerRef.current
       if (!container) return
 
-      if (event.key === 'ArrowDown' && currentSection < 1) {
+      if (event.key === 'ArrowDown' && currentSection < 2) {
         event.preventDefault()
-        setCurrentSection(1)
+        setCurrentSection(prevSection => prevSection + 1)
         container.scrollTo({
-          top: window.innerHeight,
+          top: window.innerHeight * (currentSection + 1),
           behavior: 'smooth'
         })
       } else if (event.key === 'ArrowUp' && currentSection > 0) {
         event.preventDefault()
-        setCurrentSection(0)
+        setCurrentSection(prevSection => prevSection - 1)
         container.scrollTo({
-          top: 0,
+          top: window.innerHeight * (currentSection - 1),
           behavior: 'smooth'
         })
       }
@@ -132,6 +133,16 @@ export default function PageContent() {
       transition: {
         staggerChildren: 0.1
       }
+    }
+  }
+
+  const handleScrollDown = () => {
+    if (scrollContainerRef.current && currentSection < 2) {
+      setCurrentSection(prevSection => prevSection + 1)
+      scrollContainerRef.current.scrollTo({
+        top: window.innerHeight * (currentSection + 1),
+        behavior: 'smooth'
+      })
     }
   }
 
@@ -210,41 +221,46 @@ export default function PageContent() {
         </section>
 
         {showBlogContent && (
-          <section className="min-h-screen snap-start">
-             <Navbar />
-            <div className="animate-[in_1.5s_forwards]">
-              {/* Portfolio Section */}
-              <div className="container mx-auto px-4 py-12">
-                <h1 className="text-4xl font-bold text-blue-800 text-center mb-8">My Portfolio</h1>
-                <motion.div 
-                  className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <BlogCard
-                    imageSrc="/sakura/zhizhuzi.jpg"
-                    title="建站指北"
-                    description="如何用Next.js搭建属于自己的个人博客。"
-                  />
-                  <BlogCard
-                    imageSrc="/sakura/myHeartDanger.jpg"
-                    title="RoseDB"
-                    description="一个轻量级的、基于bitcask的数据库内核"
-                  />
-                  <BlogCard
-                    imageSrc="/sakura/littlePeach.jpg"
-                    title="TinyWebserver"
-                    description="麻雀虽小，五脏俱全。"
-                  />
-                </motion.div>
+          <>
+            <section className="min-h-screen snap-start">
+              <Navbar />
+              <div className="animate-[in_1.5s_forwards]">
+                {/* Portfolio Section */}
+                <div className="container mx-auto px-4 py-12">
+                  <h1 className="text-4xl font-bold text-blue-800 text-center mb-8">My Portfolio</h1>
+                  <motion.div 
+                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <BlogCard
+                      imageSrc="/sakura/zhizhuzi.jpg"
+                      title="建站指北"
+                      description="如何用Next.js搭建属于自己的个人博客。"
+                    />
+                    <BlogCard
+                      imageSrc="/sakura/myHeartDanger.jpg"
+                      title="RoseDB"
+                      description="一个轻量级的、基于bitcask的数据库内核"
+                    />
+                    <BlogCard
+                      imageSrc="/sakura/littlePeach.jpg"
+                      title="TinyWebserver"
+                      description="麻雀虽小，五脏俱全。"
+                    />
+                  </motion.div>
+                </div>
+
+                {/* Footer */}
+                <ScrollIndicator onClick={handleScrollDown} />
+
               </div>
-
-              {/* Footer */}
-              <ScrollIndicator onClick={handleScrollDown} />
-
-            </div>
-          </section>
+            </section>
+            <section className="min-h-screen snap-start bg-gray-100 flex items-center justify-center">
+              <ContactForm />
+            </section>
+          </>
         )}
       </div>
     </main>

@@ -1,30 +1,20 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 
 interface ScrollIndicatorProps {
   onClick: () => void
 }
 
-export const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({ onClick }) => {
+export default function ScrollIndicator({ onClick }: ScrollIndicatorProps) {
   return (
-    <motion.div
-      className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
+    <button
       onClick={onClick}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+      className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white rounded-full p-2 shadow-lg animate-blur"
+      aria-label="Scroll down"
     >
-      <svg
-        className="w-10 h-10 text-white"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"></path>
-      </svg>
-    </motion.div>
+      <ChevronDown className="w-6 h-6 text-blue-800" />
+    </button>
   )
 }
+
 
