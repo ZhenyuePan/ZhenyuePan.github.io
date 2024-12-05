@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
-import { createComment } from '@/app/actions/createComment'
+import { createComment } from '@/app/actions/CreateComment'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Github, Youtube } from 'lucide-react'

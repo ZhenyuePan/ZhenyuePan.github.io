@@ -53,7 +53,7 @@ export default function BlogPosts({ initialPosts }: { initialPosts: BlogPost[] }
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Link href={`/blog/${post.slug}`}>
-                  <Card className="group overflow-hidden transition-all duration-300 hover:scale-[1.02] bg-white border-blue-200 hover:border-blue-400 shadow-lg">
+                  <Card className="group  transition-all duration-300 hover:scale-[1.02] bg-white border-blue-200 hover:border-blue-400 shadow-lg">
                     <CardHeader className="pb-4 bg-gradient-to-r from-blue-100 to-blue-50">
                       <CardTitle className="text-2xl font-serif text-blue-900 group-hover:text-blue-700 transition-colors duration-300">
                         {post.metadata.title}
