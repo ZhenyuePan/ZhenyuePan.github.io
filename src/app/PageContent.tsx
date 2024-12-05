@@ -215,7 +215,7 @@ export default function PageContent() {
           <>
             <section className="min-h-screen snap-start">
               <Navbar />
-              <div className="animate-[in_1.5s_forwards]">
+              <div className="py-12 animate-[in_1.5s_forwards]">
                 {/* Portfolio Section */}
                 <div className="container mx-auto px-4 py-12">
                   <h1 className="text-4xl font-bold text-blue-800 text-center mb-8">My Portfolio</h1>
