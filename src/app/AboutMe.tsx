@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 export default function About() {
   return (
-    <div className="container mx-auto">
       <Card className="max-w-lg mx-auto animate-fade-in">
           <CardContent className="p-6">
             <div className="flex flex-col items-center mb-6">
@@ -39,6 +38,6 @@ export default function About() {
             </div>
           </CardContent>
       </Card>
-    </div>
+    
   )
 }

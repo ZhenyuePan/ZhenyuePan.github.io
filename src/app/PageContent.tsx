@@ -8,6 +8,7 @@ import Navbar from '@/components/navbar'
 import  ScrollIndicator from '@/components/ScrollIndicator'
 import About from './AboutMe'
 import { BlogCard } from '@/components/BlogCard'
+import { ContactMe } from './ContactMe'
 
 export default function PageContent() {
   const downwaveRef = useRef<HTMLDivElement>(null)
@@ -71,8 +72,8 @@ export default function PageContent() {
 
       const delta = event.deltaY
       const scrollAmount = window.innerHeight
-
-      if (delta > 0 && currentSection < 2) {
+//控制区域的数量
+      if (delta > 0 && currentSection < 3) {
         // Scrolling down
         setCurrentSection(prevSection => prevSection + 1)
         container.scrollTo({
@@ -231,7 +232,7 @@ export default function PageContent() {
                 </div>
                 {/* Footer */}
               </div>
-              </section>
+            </section>
 
             <section className="min-h-screen snap-start">
               <Navbar />
@@ -262,14 +263,22 @@ export default function PageContent() {
                     />
                   </motion.div>
                 </div>
-
+              
                 {/* Footer */}
                 <ScrollIndicator onClick={handleScrollDown} />
 
               </div>
               </section>
-
-
+              <section className="min-h-screen snap-start">
+              <div className="py-12 animate-[in_1.5s_forwards]">
+                {/* Portfolio Section */}
+                <h1 className="text-4xl font-bold text-blue-800 text-center mb-4">Contact Me</h1>
+                  <div className="container mx-auto">
+                    <ContactMe />
+                  </div>
+                {/* Footer */}
+              </div>
+            </section>
           </>
         )}
       </div>
