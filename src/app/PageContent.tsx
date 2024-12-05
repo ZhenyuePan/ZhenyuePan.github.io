@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import Navbar from '@/components/navbar'
 import  ScrollIndicator from '@/components/ScrollIndicator'
-import { ContactForm } from '@/components/ContactForm'
+import About from './AboutMe'
 import { BlogCard } from '@/components/BlogCard'
 
 export default function PageContent() {
@@ -22,6 +22,8 @@ export default function PageContent() {
   const searchParams = useSearchParams()
   const skipIntro = searchParams.get('skip_intro') === 'true'
 
+  console.log('PageContent rendering, showBlogContent:', showBlogContent)
+
   useEffect(() => {
     const downwave = downwaveRef.current
     const video1 = video1Ref.current
@@ -33,7 +35,10 @@ export default function PageContent() {
     const startVideo1 = () => {
       setIsAnimationEnded(true)
       video1.play().catch(error => console.error("Error playing video 1:", error))
-      setTimeout(() => setShowBlogContent(true), 2000)
+      setTimeout(() => {
+        setShowBlogContent(true)
+        console.log('Setting showBlogContent to true')
+      }, 2000)
     }
 
     const handleVideo1End = () => {
@@ -139,6 +144,7 @@ export default function PageContent() {
     }
   }
 
+  console.log('Before return, showBlogContent:', showBlogContent)
   return (
     <main className="min-h-screen bg-gray-100 overflow-hidden">
       <style jsx global>{`
@@ -216,6 +222,18 @@ export default function PageContent() {
         {showBlogContent && (
           <>
             <section className="min-h-screen snap-start">
+              <div className="py-12 animate-[in_1.5s_forwards]">
+                {/* Portfolio Section */}
+                <h1 className="text-4xl font-bold text-blue-800 text-center mb-4">About Me</h1>
+
+                <div className="container mx-auto">
+                  <About />
+                </div>
+                {/* Footer */}
+              </div>
+              </section>
+
+            <section className="min-h-screen snap-start">
               <Navbar />
               <div className="py-12 animate-[in_1.5s_forwards]">
                 {/* Portfolio Section */}
@@ -249,16 +267,17 @@ export default function PageContent() {
                 <ScrollIndicator onClick={handleScrollDown} />
 
               </div>
-            </section>
-            <section className="min-h-screen snap-start bg-gray-100 flex items-center justify-center">
-              <ContactForm />
-            </section>
+              </section>
+
+
           </>
         )}
       </div>
     </main>
   )
 }
+
+
 
 
 

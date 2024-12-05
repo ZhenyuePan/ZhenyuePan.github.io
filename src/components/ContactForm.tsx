@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 
@@ -25,47 +26,10 @@ export function ContactForm() {
     >
       <h2 className="text-2xl font-bold text-blue-800 mb-6">Contact Me</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 mb-2">Name</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="message" className="block text-gray-700 mb-2">Message</label>
-          <textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows={4}
-            required
-          ></textarea>
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-        >
-          Send Message
-        </button>
+        {/* Form fields */}
       </form>
     </motion.div>
   )
 }
+
 
