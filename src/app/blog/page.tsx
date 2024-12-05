@@ -2,7 +2,6 @@ import { getBlogPosts } from "@/data/blog"
 import BlogHeader from './BlogHeader'
 import BlogPosts from './BlogPosts'
 import Navbar from "@/components/navbar"
-
 export const metadata = {
   title: "Kafka's Blog",
   description: "Exploring the digital realm throughcode  and creativity.",
@@ -32,19 +31,30 @@ export default async function BlogPage() {
   }))
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+    <div className="absolute overflow-x-hidden"
+      style = {{
+      backgroundImage: "url('/sakura/rainy.jpg')",
+      backgroundPosition: "center",
+      height: "100vh",
+      width: "100vw",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    }}>
+    <div className="absolute top-[60%] w-[100%] from-blue-50 via-white to-blue-100">
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay" />
       <div className="relative">
         <Navbar />
         <BlogHeader />
         <BlogPosts initialPosts={posts} />
-        <footer className="bg-gray-200  py-6">
+       
+        <footer className="bg-gray-200 py-6">
             <div className="container mx-auto text-center">
               <p>&copy; 2024 卡夫卡的笔记本 版权所有。</p>
               <p>powered by 我自己</p>
             </div>
           </footer>
       </div>
+    </div>
     </div>
   )
 }

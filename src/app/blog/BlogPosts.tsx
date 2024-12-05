@@ -39,7 +39,7 @@ export default function BlogPosts({ initialPosts }: { initialPosts: BlogPost[] }
   }, []);
 
   return (
-    <main className="container mx-auto px-4 py-8 bg-gradient-to-br from-blue-50 to-white min-h-screen">
+    <main className="container mx-auto px-4 py-8 min-h-screen">
       <ScrollArea className="h-[calc(100vh-200px)]">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {posts
@@ -47,7 +47,7 @@ export default function BlogPosts({ initialPosts }: { initialPosts: BlogPost[] }
             .map((post, index) => (
               <motion.div
                 key={post.slug}
-                className="blog-card"
+                className="blog-card w-full max-w-md mx-auto"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
