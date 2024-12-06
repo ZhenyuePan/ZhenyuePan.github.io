@@ -135,8 +135,9 @@ export default function PageContent() {
     }
   }
 
+  //控制区域数量2
   const handleScrollDown = () => {
-    if (scrollContainerRef.current && currentSection < 2) {
+    if (scrollContainerRef.current && currentSection < 3) {
       setCurrentSection(prevSection => prevSection + 1)
       scrollContainerRef.current.scrollTo({
         top: window.innerHeight * (currentSection + 1),
@@ -149,19 +150,11 @@ export default function PageContent() {
   return (
     <main className="min-h-screen bg-gray-100 overflow-hidden">
       <style jsx global>{`
+
         html, body {
           overflow: hidden;
         }
-        @keyframes down {
-          0% { transform: translateY(-10vh); }
-          100% { transform: translateY(110vh); }
-        }
-        @keyframes out {
-          100% { opacity: 0; display: none; }
-        }
-        @keyframes in {
-          100% { opacity: 1; }
-        }
+        
       `}</style>
       
      
@@ -225,7 +218,7 @@ export default function PageContent() {
             <section className="min-h-screen snap-start">
               <div className="py-12 animate-[in_1.5s_forwards]">
                 {/* Portfolio Section */}
-                <h1 className="text-4xl font-bold text-blue-800 text-center mb-4">About Me</h1>
+                <h1 className="text-4xl font-bold text-blue-200 text-center mb-4">About Me</h1>
 
                 <div className="container mx-auto">
                   <About />
@@ -239,7 +232,7 @@ export default function PageContent() {
               <div className="py-12 animate-[in_1.5s_forwards]">
                 {/* Portfolio Section */}
                 <div className="container mx-auto px-4 py-12">
-                  <h1 className="text-4xl font-bold text-blue-800 text-center mb-8">My Portfolio</h1>
+                  <h1 className="text-4xl font-bold text-blue-200 text-center mb-8">My Portfolio</h1>
                   <motion.div 
                     className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
                     variants={containerVariants}
@@ -272,7 +265,7 @@ export default function PageContent() {
               <section className="min-h-screen snap-start">
               <div className="py-12 animate-[in_1.5s_forwards]">
                 {/* Portfolio Section */}
-                <h1 className="text-4xl font-bold text-blue-800 text-center mb-4">Contact Me</h1>
+                <h1 className="text-4xl font-bold text-blue-200 text-center mb-4">Contact Me</h1>
                   <div className="container mx-auto">
                     <ContactMe />
                   </div>

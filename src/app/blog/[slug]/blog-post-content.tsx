@@ -34,7 +34,6 @@ interface Heading {
 }
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
-  const [headings, setHeadings] = useState<Heading[]>([])
  
   const [renderedContent, setRenderedContent] = useState("")
 
@@ -74,7 +73,6 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       headingStack.push(newHeading)
     })
 
-    setHeadings(extractedHeadings)
     console.log('Extracted headings:', extractedHeadings)
   }, [post.content])
 
