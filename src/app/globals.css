@@ -279,9 +279,20 @@ body {
   text-decoration: underline;
 }
 
-.blog-content ul, .blog-content ol {
+.blog-content ul {
+  list-style-type: disc;
+  margin-left: 1.5em;
   margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+  margin-left: 1.5em;
+  margin-bottom: 1.5rem;
+}
+
+.blog-content ul li, .blog-content ol li {
+  margin-bottom: 0.5rem;
 }
 
 .blog-content li {
@@ -318,4 +329,8 @@ body {
   font-style: italic;
   color: #666;
 }
+
+
+
+
 

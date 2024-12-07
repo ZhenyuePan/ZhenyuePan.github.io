@@ -11,10 +11,15 @@ renderer.code = ({ text, lang = 'plaintext' }) => {
 
 marked.setOptions({
   renderer,
-  // 移除 langPrefix，因为我们通过 renderer 手动控制类名
+  gfm: true,
+  breaks: true,
+  pedantic: false,
+  smartLists: true,
+  smartypants: true,
 });
 
 export async function markdownToHTML(markdown: string): Promise<string> {
   return marked(markdown);
 }
+
 
