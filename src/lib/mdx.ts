@@ -14,8 +14,6 @@ marked.setOptions({
   gfm: true,
   breaks: true,
   pedantic: false,
-  smartLists: true,
-  smartypants: true,
 });
 
 export async function markdownToHTML(markdown: string): Promise<string> {
