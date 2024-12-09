@@ -9,6 +9,7 @@ import  ScrollIndicator from '@/components/ScrollIndicator'
 import About from './AboutMe'
 import { BlogCard } from '@/components/BlogCard'
 import { ContactMe } from './ContactMe'
+import { Card,CardContent } from '@/components/ui/card'
 
 export default function PageContent() {
   const downwaveRef = useRef<HTMLDivElement>(null)
@@ -72,8 +73,8 @@ export default function PageContent() {
 
       const delta = event.deltaY
       const scrollAmount = window.innerHeight
-//控制区域的数量
-      if (delta > 0 && currentSection < 3) {
+  //控制区域的数量
+      if (delta > 0 && currentSection < 4) {
         // Scrolling down
         setCurrentSection(prevSection => prevSection + 1)
         container.scrollTo({
@@ -137,7 +138,7 @@ export default function PageContent() {
 
   //控制区域数量2
   const handleScrollDown = () => {
-    if (scrollContainerRef.current && currentSection < 3) {
+    if (scrollContainerRef.current && currentSection < 4) {
       setCurrentSection(prevSection => prevSection + 1)
       scrollContainerRef.current.scrollTo({
         top: window.innerHeight * (currentSection + 1),
@@ -272,7 +273,23 @@ export default function PageContent() {
                 {/* Footer */}
               </div>
             </section>
+
+            <section className="snap-start w-full ">
+              <div className="animate-[in_1.5s_forwards]">
+              <Card className="bg-gray-300  w-full">
+                <CardContent className="p-6">
+                  <div className="text-center">
+                    <p className="text-sm text-black mb-2">苏ICP备2024148448号</p>
+                    <p className="text-sm text-black mb-2">&copy; 2024 卡夫卡的笔记本 版权所有。</p>
+                    <p className="text-xs text-black ">powered by next.js</p>
+                  </div>
+                </CardContent>
+              </Card>
+              </div>
+            </section>
+
           </>
+
         )}
       </div>
     </main>
