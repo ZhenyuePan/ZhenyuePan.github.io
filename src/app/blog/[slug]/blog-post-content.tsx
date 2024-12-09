@@ -7,7 +7,6 @@ import { ChevronLeft } from 'lucide-react'
 import Link from "next/link"
 import { marked } from 'marked'
 import { formatDate } from "@/lib/utils"
-import { TableOfContents } from "@/components/TableOfContents"
 
 interface PostMetadata {
   title: string
@@ -35,6 +34,9 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       console.error("Post content is undefined")
       return
     }
+
+
+
 
     const rendered = marked(post.content)
     setRenderedContent(rendered as string)
@@ -64,13 +66,9 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
             {formatDate(post.metadata.publishedAt)}
           </p>
         </header>
-
         <div className="flex">
-          <aside className="hidden lg:block w-64 mr-8">
-            <TableOfContents content={renderedContent} />
-          </aside>
 
-          <Card className="lg:flex-grow w-full lg:w-[calc(100%-18rem)] p-6 bg-white/70 dark:bg-gray-900/70 text-gray-900 dark:text-gray-100 backdrop-blur-sm">
+          <Card className="lg:flex-grow w-full lg:p-6 bg-white/70 dark:bg-gray-900/70 text-gray-900 dark:text-gray-100 backdrop-blur-sm ml-64">
             <article className="prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none blog-content">
               {renderedContent ? (
                 <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
@@ -89,6 +87,8 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     </div>
   )
 }
+
+
 
 
 
