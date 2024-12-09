@@ -51,7 +51,7 @@ export default async function BlogPage() {
             <div className="container mx-auto text-center">
               <p>苏ICP备2024148448号</p>
               <p>&copy; 2024 卡夫卡的笔记本 版权所有。</p>
-              <p>powered by 我自己</p>
+              <p>powered by next.js</p>
             </div>
           </footer>
       </div>

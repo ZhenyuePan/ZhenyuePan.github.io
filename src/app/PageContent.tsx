@@ -281,7 +281,7 @@ export default function PageContent() {
                   <div className="text-center">
                     <p className="text-sm text-black mb-2">苏ICP备2024148448号</p>
                     <p className="text-sm text-black mb-2">&copy; 2024 卡夫卡的笔记本 版权所有。</p>
-                    <p className="text-xs text-black ">powered by next.js</p>
+                    <p className="text-sm text-black">powered by next.js</p>
                   </div>
                 </CardContent>
               </Card>
