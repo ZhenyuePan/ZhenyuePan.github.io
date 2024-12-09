@@ -276,7 +276,7 @@ export default function PageContent() {
 
             <section className="snap-start w-full ">
               <div className="animate-[in_1.5s_forwards]">
-              <Card className="bg-gray-300  w-full">
+              <Card className="bg-gray-200  w-full">
                 <CardContent className="p-6">
                   <div className="text-center">
                     <p className="text-sm text-black mb-2">苏ICP备2024148448号</p>
