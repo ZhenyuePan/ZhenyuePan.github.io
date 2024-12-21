@@ -1,59 +1,57 @@
-import { Metadata } from 'next'
-import { getBlogPosts, getPost } from "@/data/blog"
-import { notFound } from "next/navigation"
-import BlogPostContent from "./blog-post-content"
+import type { Metadata } from 'next'
 
-type PageProps = {
-  params: Promise<{ slug: string }>
+export const metadata: Metadata = {
+  title: 'Introduction | Minimal Docs Site',
+  description: 'Welcome to our minimal documentation site',
 }
 
-export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params
-  const post = await getPost(slug)
-
-  if (!post) {
-    notFound()
-  }
-
-  return <BlogPostContent post={post} />
+export default function Home() {
+  return (
+    <main className="mx-auto max-w-3xl">
+      <h1 className="mb-6 text-4xl font-bold">Welcome to Our Docs</h1>
+      <p className="mb-4">
+        This is a gorgeous minimal documentation site built with Next.js,
+        Tailwind CSS, and shadcn/ui components.
+      </p>
+      <h2 className="mb-4 mt-8 text-2xl font-semibold">Features</h2>
+      <ul className="mb-4 list-inside list-disc space-y-1">
+        <li>Clean and minimal design</li>
+        <li>Dark mode support</li>
+        <li>Responsive layout</li>
+        <li>Easy navigation with shadcn sidebar</li>
+        <li>Built with Next.js App Router</li>
+      </ul>
+      <h2 className="mb-4 mt-8 text-2xl font-semibold">Getting Started</h2>
+      <p className="mb-4">
+        To get started with our documentation, please navigate through the
+        sections using the sidebar on the left. Here&apos;s a quick overview of
+        the available sections:
+      </p>
+      <ul className="mb-4 list-inside list-disc space-y-1">
+        <li>
+          <strong>Getting Started</strong>: Learn how to install and set up our
+          library
+        </li>
+        <li>
+          <strong>Components</strong>: Explore the available components and how
+          to use them
+        </li>
+        <li>
+          <strong>API Reference</strong>: Detailed information about our API and
+          its methods
+        </li>
+      </ul>
+      <p className="mb-4">
+        If you have any questions or need further assistance, don&apos;t
+        hesitate to reach out to our support team.
+      </p>
+      <h2 className="mb-4 mt-8 text-2xl font-semibold">Contributing</h2>
+      <p className="mb-4">
+        We welcome contributions to our documentation. If you find any errors or
+        have suggestions for improvement, please open an issue or submit a pull
+        request on our GitHub repository.
+      </p>
+    </main>
+  )
 }
-
-export async function generateStaticParams() {
-  const posts = await getBlogPosts()
-  return posts.map((post) => ({ slug: post.slug }))
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata | undefined> {
-  const { slug } = await params
-  const post = await getPost(slug)
-
-  if (!post) {
-    return
-  }
-
-  const { title, publishedAt: publishedTime, summary: description } = post.metadata
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  }
-}
-
-
-
-
-
-
-
 
