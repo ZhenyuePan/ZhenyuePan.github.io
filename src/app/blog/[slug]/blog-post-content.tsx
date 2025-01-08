@@ -34,12 +34,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       console.error("Post content is undefined")
       return
     }
-
-
-
-
-    const rendered = marked(post.content)
-    setRenderedContent(rendered as string)
+    setRenderedContent(marked(post.content) as string)
   }, [post.content])
 
   return (
@@ -53,10 +48,11 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         backgroundRepeat: "no-repeat",
       }}>
       <div className="flex-grow flex-col items-center sm:px-6 lg:px-8 text-gray-900 dark:text-gray-100 text-sm">
+        <nav className="mb-8" aria-label="Back to blog"></nav>
         <nav className="mb-8" aria-label="Back to blog">
-          <Link href="/blog" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors duration-200">
+          <Link href="/blog" className="flex items-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors duration-200">
             <ChevronLeft className="w-4 h-4 mr-1" aria-hidden="true" />
-            Back to all articles
+            <span>Back to all articles</span>
           </Link>
         </nav>
 
@@ -68,20 +64,20 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         </header>
         <div className="flex">
 
-          <Card className="lg:flex-grow w-full lg:p-6 bg-white/70 dark:bg-gray-900/70 text-gray-900 dark:text-gray-100 backdrop-blur-sm ml-64">
+            <Card className="lg:flex-grow w-full lg:w-2/3 lg:p-6 bg-white/70 dark:bg-gray-900/70 text-gray-900 dark:text-gray-100 backdrop-blur-sm mx-auto">
             <article className="prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none blog-content">
               {renderedContent ? (
-                <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
+              <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
               ) : (
-                <Alert>
-                  <AlertTitle>Content Unavailable</AlertTitle>
-                  <AlertDescription>
-                    The content for this blog post is currently unavailable. Please check back later.
-                  </AlertDescription>
-                </Alert>
+              <Alert>
+              <AlertTitle>Content Unavailable</AlertTitle>
+              <AlertDescription>
+              The content for this blog post is currently unavailable. Please check back later.
+              </AlertDescription>
+              </Alert>
               )}
             </article>
-          </Card>
+            </Card>
         </div>
       </div>
     </div>

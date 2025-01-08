@@ -40,7 +40,7 @@ export default async function BlogPage() {
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
     }}>
-    <div className="absolute top-[60%] w-[100%] from-blue-50 via-white to-blue-100">
+    <div className="absolute w-[100%] from-blue-50 via-white to-blue-100">
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay" />
       <div className="relative">
         <Navbar />
