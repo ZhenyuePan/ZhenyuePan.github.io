@@ -1,0 +1,178 @@
+---
+title: "TinyWebServer（五）数据库连接池"
+publishedAt: "2024-12-23"
+summary: "数据库连接池"
+---
+
+# 校验 & 数据库连接池
+
+
+
+数据库连接池
+
+> - 单例模式，保证唯一
+> - list实现连接池
+> - 连接池为静态大小
+> - 互斥锁实现线程安全
+
+校验
+
+> - HTTP请求采用POST方式
+> - 登录用户名和密码校验
+> - 用户注册及多线程注册安全
+
+这段代码实现了一个简单的 MySQL 数据库连接池。连接池的主要作用是预先创建一定数量的数据库连接，并对这些连接进行统一管理和分配，避免频繁地创建和销毁数据库连接，从而提高数据库访问的效率以及资源利用率。它通过使用信号量和互斥锁等机制来协调多个线程对连接资源的获取和释放操作。
+
+### 类成员变量及含义
+
+1. **`useCount_`**：用于记录当前正在被使用的连接数量，初始化为`0`，随着连接被取出使用而递增，归还时并不直接操作该变量（重点关注使用情况的话可结合业务逻辑在外部统计增减）。
+2. **`freeCount_`**：表示当前处于空闲状态、可被获取使用的连接数量，初始化为`0`，连接被归还到连接池时该值会增加，被取出时会减少。
+3. **`MAX_CONN_`**：记录连接池初始化时设定的最大连接数量，通过`Init`函数进行初始化赋值。
+4. **`connQue_`**：一个`std::queue`类型的队列，用于存放创建好的`MYSQL*`类型的数据库连接指针，是连接池管理连接的核心数据结构，连接的获取和归还操作都围绕这个队列进行。
+5. **`mtx_`**：`std::mutex`类型的互斥锁，用于保护连接队列`connQue_`的并发访问，确保在多线程环境下对队列进行操作（如取连接、放连接等）时数据的一致性。
+6. **`semId_`**：`sem_t`类型的信号量，其初始值在`Init`函数中被设置为最大连接数`MAX_CONN_`，用于控制可获取的空闲连接数量，线程获取连接时会对信号量执行`sem_wait`操作（使信号量值减 1，表示占用一个空闲连接），归还连接时执行`sem_post`操作（使信号量值加 1，表示释放一个空闲连接回到可用状态）。
+
+### 重要成员函数解析
+
+1. **构造函数 `SqlConnPool()`**
+
+```cpp
+SqlConnPool::SqlConnPool() {
+    useCount_ = 0;
+    freeCount_ = 0;
+}
+```
+
+构造函数主要是对表示使用和空闲连接数量的两个变量进行初始化，将它们都初始化为`0`，此时还没有真正创建数据库连接，只是做了基础的计数变量初始化。
+
+1. **单例模式函数 `Instance()`**
+
+```cpp
+SqlConnPool* SqlConnPool::Instance() {
+    static SqlConnPool connPool;
+    return &connPool;
+}
+```
+
+这是一个典型的单例模式实现方法，通过静态局部变量创建一个唯一的`SqlConnPool`对象实例，并返回其指针。保证整个程序中只有一个连接池实例存在，方便在不同代码位置获取和使用这个连接池。
+
+1. **初始化函数 `Init()`**
+
+```cpp
+void SqlConnPool::Init(const char* host, int port,
+            const char* user,const char* pwd, const char* dbName,
+            int connSize = 10) {
+    assert(connSize > 0);
+    for (int i = 0; i < connSize; i++) {
+        MYSQL *sql = nullptr;
+        sql = mysql_init(sql);								//mysql api
+        if (!sql) {
+            LOG_ERROR("MySql init error!");
+            assert(sql);
+        }
+        sql = mysql_real_connect(sql, host,
+                                 user, pwd,
+                                 dbName, port, nullptr, 0);//mysql api
+        if (!sql) {
+            LOG_ERROR("MySql Connect error!");
+        }
+        connQue_.push(sql);
+    }
+    MAX_CONN_ = connSize;
+    sem_init(&semId_, 0, MAX_CONN_);
+}
+```
+
+这个函数用于初始化连接池，主要做了以下几件事：
+
+- 根据传入的参数（数据库主机地址、端口、用户名、密码、数据库名以及要创建的连接数量，连接数量有默认值`10`），循环创建指定数量的数据库连接。
+- 对于每个要创建的连接，先调用`mysql_init`函数初始化`MYSQL`结构体指针，若初始化失败则记录错误日志并通过`assert`终止程序（这里可以考虑更合理的错误处理方式，比如返回错误码给调用者等）。
+- 接着使用`mysql_real_connect`函数尝试建立与数据库的实际连接，连接失败同样记录错误日志。成功建立的连接会被放入连接队列`connQue_`中。
+- 最后将传入的连接数量参数赋值给`MAX_CONN_`表示最大连接数，并初始化信号量`semId_`，其初始值设置为最大连接数，意味着开始时所有连接都是空闲可用的。
+
+1. **获取连接函数 `GetConn()`**
+
+```cpp
+MYSQL* SqlConnPool::GetConn() {             
+    MYSQL *sql = nullptr;
+    if(connQue_.empty()){
+        LOG_WARN("SqlConnPool busy!");
+        return nullptr;
+    }
+    sem_wait(&semId_);                      //信号量减一
+    {
+        lock_guard<mutex> locker(mtx_);
+        sql = connQue_.front();
+        connQue_.pop();
+    }
+    return sql;
+}
+```
+
+该函数用于从连接池中获取一个可用的数据库连接，步骤如下：
+
+- 首先判断连接队列是否为空，如果为空说明当前没有空闲连接可用，记录警告日志并返回`nullptr`告知调用者获取连接失败。
+- 若队列不为空，则先对信号量执行`sem_wait`操作，使信号量值减`1`，表示占用了一个空闲连接（如果信号量值原本为`0`，则此线程会阻塞等待直到有可用的空闲连接，即其他线程归还了连接使得信号量值大于`0`）。
+- 然后使用`lock_guard`结合互斥锁`mtx_`来保证在多线程环境下安全地从连接队列头部取出一个连接，取出后将该连接返回给调用者使用。
+
+1. **归还连接函数 `FreeConn()`**
+
+```cpp
+void SqlConnPool::FreeConn(MYSQL* sql) {
+    assert(sql);
+    lock_guard<mutex> locker(mtx_);
+    connQue_.push(sql);
+    sem_post(&semId_);                      //信号量加1
+}
+```
+
+当使用完数据库连接后，通过调用这个函数将连接归还给连接池，操作如下：
+
+- 首先通过`assert`确保传入的连接指针不为空，避免错误的归还操作。
+- 使用`lock_guard`和互斥锁`mtx_`保证多线程下安全地将连接指针放回连接队列`connQue_`中。
+- 最后对信号量执行`sem_post`操作，使信号量值加`1`，表示释放了一个空闲连接回到可用状态，这样其他等待获取连接的线程就可以获取到这个刚归还的空闲连接了。
+
+1. **关闭连接池函数 `ClosePool()`**
+
+```cpp
+void SqlConnPool::ClosePool() {
+    lock_guard<mutex> locker(mtx_);
+    while(!connQue_.empty()) {              //如果连接队列不为空
+        auto item = connQue_.front();       //从连接队列一个一个取出连接关闭
+        connQue_.pop();
+        mysql_close(item);                  
+    }
+    mysql_library_end();                    //关闭mysql库
+}
+```
+
+该函数用于关闭整个连接池，具体操作如下：
+
+- 通过`lock_guard`加锁确保在多线程环境下安全地操作连接队列。
+- 循环遍历连接队列，将队列中所有的连接逐个取出，调用`mysql_close`函数关闭每个数据库连接，释放相关资源。
+- 最后调用`mysql_library_end`函数关闭整个 MySQL 库，完成整个连接池以及相关 MySQL 资源的关闭清理工作。
+
+1. **获取空闲连接数函数 `GetFreeConnCount()`**
+
+```cpp
+int SqlConnPool::GetFreeConnCount() {
+    lock_guard<mutex> locker(mtx_);
+    return connQue_.size();
+}
+```
+
+这个函数用于获取当前连接池中处于空闲状态的连接数量，通过使用`lock_guard`加锁保证多线程下获取连接队列大小操作的安全性，然后直接返回连接队列的大小，也就是空闲连接的数量。
+
+1. **析构函数 `~SqlConnPool()`**
+
+```cpp
+SqlConnPool::~SqlConnPool() {
+    ClosePool();
+}
+```
+
+析构函数在对象销毁时被调用，在这里它主要调用`ClosePool`函数来完成关闭连接池、释放所有数据库连接以及相关 MySQL 库资源的操作，确保资源的正确清理。
+
+### 整体逻辑总结
+
+整体来看，这个数据库连接池实现了基本的连接创建、获取、归还以及关闭等功能，通过信号量和互斥锁协调多线程对连接资源的并发访问，使得在多线程应用程序中可以高效、安全地使用数据库连接，避免频繁创建和销毁连接带来的性能开销，提高了数据库操作的整体效率和资源利用率。不过在实际应用中，可能还需要进一步考虑更多异常处理、配置灵活性以及与具体业务更好结合等方面的优化。
