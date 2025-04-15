@@ -30,10 +30,8 @@ summary: "状态机解析http请求"
 ssize_t Buffer::ReadFd(int fd, int* saveErrno) {
     // 64KB
     char buff[65535];   // 临时的数组，保证能够把所有的数据都读出来
-    
     struct iovec iov[2];
     const size_t writable = WritableBytes();
-    
     /* 分散读，保证数据全部读完 */
     // iov[0] Buffer内置的数组_buffer，默认大小是1024
     // iov[1] buff临时数组，大小为65535
@@ -41,7 +39,6 @@ ssize_t Buffer::ReadFd(int fd, int* saveErrno) {
     iov[0].iov_len = writable;
     iov[1].iov_base = buff;
     iov[1].iov_len = sizeof(buff);
-
     const ssize_t len = readv(fd, iov, 2);  // 真正的读操作
     if(len < 0) {
         *saveErrno = errno;
@@ -55,7 +52,6 @@ ssize_t Buffer::ReadFd(int fd, int* saveErrno) {
     }
     return len;
 }
-
 ```
 
 提问：为什么会采用自动增长的缓冲区呢?，如果vector容器空间更大，不就省去的copy所带来的时间消耗?

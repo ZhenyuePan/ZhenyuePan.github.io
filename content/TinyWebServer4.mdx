@@ -22,13 +22,10 @@ if(timeoutMS_ > 0) {
     // 通过定时器GetNextTick(),清除超时的节点，然后获取最先要超时的连接的超时的时间
     timeMS = timer_->GetNextTick();
 }
-
 // timeMS是最先要超时的连接的超时的时间，传递到epoll_wait()函数中
 // 当timeMS时间内有事件发生，epoll_wait()返回，否则等到了timeMS时间后才返回
 // 这样做的目的是为了让epoll_wait()调用次数变少，提高效率
 int eventCnt = epoller_->Wait(timeMS);
-
-
 ```
 
 定时器又是如何实现的呢?
@@ -50,7 +47,6 @@ void HeapTimer::siftup_(size_t i) {
         j = (i - 1) / 2;
     }
 }
-
 ```
 
 `siftdown_`函数：
@@ -85,7 +81,6 @@ void HeapTimer::SwapNode_(size_t i, size_t j) {
     ref_[heap_[i].id] = i;
     ref_[heap_[j].id] = j;
 } 
-
 ```
 
 在处理`DealListen_()`函数时，会调用`HttpTimer`对象`timer_`的`add()`函数，在`add`中会建立文件描述符`fd`和节点编号之间的映射关系，当然如果节点存在则直接调整堆即可。
@@ -113,7 +108,6 @@ void HeapTimer::add(int id, int timeout, const TimeoutCallBack& cb) {
         }
     }
 }
-
 ```
 
 而借助于上调`siftup_`、下调`siftdown_`与交换节点`SwapNode_`，可以实现堆的插入、删除、调整指定堆节点的操作。

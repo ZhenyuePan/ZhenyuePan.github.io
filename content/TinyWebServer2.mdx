@@ -26,21 +26,16 @@ Socket接口使用与实现方式（为简化代码，未对异常处理）：
  * 3.bind（）
  * 4.监听端口listen（）
  */
-
-
 listenFd_ = socket(AF_INET, SOCK_STREAM, 0);
 struct sockaddr_in addr;
 addr.sin_family = AF_INET;
 addr.sin_addr.s_addr = htonl(INADDR_ANY);
 addr.sin_port = htons(port_);
-
 int optval = 1;
 /* 端口复用 */
 ret = setsockopt(listenFd_, SOL_SOCKET, SO_REUSEADDR, (const void*)&optval, sizeof(int));
-
 ret = bind(listenFd_, (struct sockaddr *)&addr, sizeof(addr));
 ret = listen(listenFd_, 6);
-
 ```
 
 ### Epoll
@@ -48,8 +43,6 @@ ret = listen(listenFd_, 6);
 ![img](https://i-blog.csdnimg.cn/blog_migrate/cb79739a87823a9e9917719879311a68.png)
 
 ​	远端的很多用户会尝试去`connect()`这个Web Server上正在`listen`的这个`port`，而监听到的这些连接会排队等待被`accept()`。由于用户连接请求是随机到达的异步事件，每当监听socket（`listenfd`）`listen`到新的客户连接并且放入监听队列，我们都需要告诉我们的Web服务器有连接来了，`accept`这个连接，并分配一个逻辑单元来处理这个用户请求。而且，我们在处理这个请求的同时，还需要继续监听其他客户的请求并分配其另一逻辑单元来处理（并发，同时处理多个事件，后面会提到使用线程池实现并发）。
-
-
 
 ​	这里，服务器通过**epoll**这种I/O复用技术（还有select和poll）来实现对监听socket（`listenfd`）和连接socket（客户请求）的同时监听。注意I/O复用虽然可以同时监听多个文件描述符，但是它本身是阻塞（read(),recv())的，并且当有多个文件描述符同时就绪的时候，如果不采取额外措施，程序则只能按顺序处理其中就绪的每一个文件描述符，所以为提高效率，我们将在这部分通过线程池来实现并发（多线程并发），为每个就绪的文件描述符分配一个逻辑单元（线程）来处理。
 
@@ -147,7 +140,6 @@ for(int i = 0; i < number; ++i) {
 ```C++
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
-
 #include <mutex>
 #include <condition_variable>
 #include <queue>
@@ -157,7 +149,6 @@ class ThreadPool {
 public:
     explicit ThreadPool(size_t threadCount = 8): pool_(std::make_shared<Pool>()) {  // explicit防止构造函数进行隐式类型转换
             assert(threadCount > 0);
-
             // 创建threadCount个子线程
             for(size_t i = 0; i < threadCount; i++) {
                 std::thread([pool = pool_] {
@@ -178,11 +169,8 @@ public:
                 }).detach();// 线程分离
             }
     }
-
     ThreadPool() = default;
-
     ThreadPool(ThreadPool&&) = default;
-    
     ~ThreadPool() {
         if(static_cast<bool>(pool_)) {
             {
@@ -192,7 +180,6 @@ public:
             pool_->cond.notify_all();
         }
     }
-
     template<class F>
     void AddTask(F&& task) {
         {
@@ -201,7 +188,6 @@ public:
         }
         pool_->cond.notify_one();   // 唤醒一个等待的线程
     }
-
 private:
     // 结构体
     struct Pool {
@@ -212,8 +198,6 @@ private:
     };
     std::shared_ptr<Pool> pool_;  //  池子
 };
-
-
 #endif //THREADPOOL_H
 ```
 

@@ -24,8 +24,7 @@ public:
     void init(int level, const char* path = "./log",
                 const char* suffix =".log",
                 int maxQueueCapacity = 1024);
-
-    static Log* Instance();    
+    static Log* Instance();
 private:
     Log();
     virtual ~Log();
@@ -54,7 +53,6 @@ Log* Log::Instance() {  // 懒汉式，不存在线程安全问题
             log->flush();\
         }\
     } while(0);
-
 #define LOG_DEBUG(format, ...) do {LOG_BASE(0, format, ##__VA_ARGS__)} while(0);
 #define LOG_INFO(format, ...)  do {LOG_BASE(1, format, ##__VA_ARGS__)} while(0);
 #define LOG_WARN(format, ...)  do {LOG_BASE(2, format, ##__VA_ARGS__)} while(0);
@@ -76,7 +74,6 @@ void Log::init(int level = 1, const char* path, const char* suffix,
         if(!deque_) {
             unique_ptr<BlockDeque<std::string>> newDeque(new BlockDeque<std::string>);
             deque_ = move(newDeque);
-            
             std::unique_ptr<std::thread> NewThread(new thread(FlushLogThread));
             writeThread_ = move(NewThread);  // 写线程
         }
@@ -92,7 +89,6 @@ void Log::init(int level = 1, const char* path, const char* suffix,
 void Log::FlushLogThread() {
     Log::Instance()->AsyncWrite_();
 }
-
 void Log::AsyncWrite_() {
     string str = "";
     while(deque_->pop(str)) {
@@ -100,9 +96,6 @@ void Log::AsyncWrite_() {
         fputs(str.c_str(), fp_);
     }
 }
-```
-
-```C++
 void Log::flush() {
     if(isAsync_) { 
         deque_->flush(); 
@@ -111,5 +104,5 @@ void Log::flush() {
 }
 ```
 
-当使用`LOG_DEBUG`、`LOG_INFO`、`LOG_WARN`与`LOG_ERROR`时，则会宏替换为`LOG_BASE`，`LOG_BASE`继续宏替换至执行代码，然后依据日志开关与等级是否记录，如果记录则会调用`write()`函数，在`write()`函数中会制作日志记录如日志日期、日志行数、日志内容等至`buff_`中，然后添加至阻塞队列中，在`AsyncWrite_()`函数的循环能继续向下执行，向`FILE*`类型的指针`fp_`写入字符串，然后再调用`flush()`函数刷新至日志文件中，这是日志记录的整个过程，可结合上述的具体实现。而`write()`函数可自行查看源代码。
+当使用`LOG_DEBUG`、`LOG_INFO`、`LOG_WARN`与`LOG_ERROR`时，则会宏替换为`LOG_BASE`，`LOG_BASE`继续宏替换至执行代码，然后依据日志开关与等级是否记录，如果记录则会调用`write()`函数，在`write()`函数中会制作日志记录如日志日期、日志行数、日志内容等至`buff_`中，然后添加至阻塞队列中，在`AsyncWrite_()`函数的循环能继续向下执行，向`FILE*`类型的指针`fp_`写入字符串，然后再调用`flush()`函数刷新至日志文件中，这是日志记录的整个过程，可结合上述的具体实现。而`write()`函数可自行查看源代。
 
