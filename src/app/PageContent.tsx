@@ -243,17 +243,17 @@ export default function PageContent() {
                     <BlogCard
                       imageSrc="/sakura/zhizhuzi.jpg"
                       title="建站指北"
-                      description="用Next.js搭建属于自己的个人博客"
+                      description="用Next.js搭建属于自己的个人博客（还没时间写）"
                     />
                     <BlogCard
                       imageSrc="/sakura/myHeartDanger.jpg"
-                      title="RoseDB"
-                      description="一个轻量级的KV数据库"
+                      title="基于Bitcask的高性能KV存储引擎"
+                      description="一个轻量级、高性能的KV存储引擎（未开源）"
                     />
                     <BlogCard
                       imageSrc="/sakura/littlePeach.jpg"
                       title="TinyWebserver"
-                      description="Linux网络编程入门级项目"
+                      description="Linux网络编程入门用项目（已更新博客）"
                     />
                   </motion.div>
                 </div>
