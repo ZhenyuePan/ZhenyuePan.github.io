@@ -20,7 +20,8 @@ export default function About() {
             <div className="space-y-2">
               <p>
                 Welcome to my about page! I&apos;m a passionate Coder with 1 years of experience in CS Master. 
-                I specialize in FullStack.
+                I specialize in C++/golang Backend and DataBase Core.
+                my favorite game is bolders&apos;gate 3.
               </p>
               
               <p>
